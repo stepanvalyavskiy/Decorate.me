@@ -1,0 +1,21 @@
+<idea-plugin>
+    <id>clueqva.Decorate.me</id>
+    <name>me.Decorated</name>
+    <vendor email="stepanvalyavskiy@gmail.com" url="https://www.linkedin.com/in/stepan-valiavskii"/>
+
+    <description><![CDATA[
+    wraps constructors in the decorating constructors using completions
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <completion.contributor language="JAVA"
+                                implementationClass="decorate.me.DecoratorConstructorsCompletionContributor"/>
+    </extensions>
+
+    <actions>
+        <!-- Not Yet -->
+    </actions>
+</idea-plugin>
