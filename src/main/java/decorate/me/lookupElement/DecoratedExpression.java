@@ -25,7 +25,6 @@ public class DecoratedExpression {
 
     @Override
     public String toString() {
-        //TODO ! direct to origin context
         String template = parameters()
                 .replaceAll(parentInterface(), "!")
                 .replaceAll("[^(),!]*", "")
@@ -47,8 +46,6 @@ public class DecoratedExpression {
     }
 
     private Function<JvmParameter, String>  typeAndName = p -> {
-        //TODO GENERICS
-        //TODO self with []
         if (p instanceof PsiParameter) {
             PsiType type = ((PsiParameter) p).getType();
             if (type instanceof PsiClassReferenceType) {

@@ -112,12 +112,11 @@ public class DecoratorConstructorsCompletionContributor extends CompletionContri
             return psiInterfacesTree;
         }
 
-        @NotNull
         private List<PsiMethod> inheritorsConstructorsThatHaveInterfaceAsParameter(SearchScope scope, PsiClass parentInterface) {
             Predicate<PsiMethod> hasParentInterfaceAsParameter =
                     ctor -> Arrays.stream(ctor.getParameters())
                                   .anyMatch(param -> parentInterface
-                                          .equals((PsiUtil.resolveClassInType((PsiType) param.getType()))));
+                                          .isEquivalentTo((PsiUtil.resolveClassInType((PsiType) param.getType()))));
             return ClassInheritorsSearch.search(parentInterface, scope, true).findAll()
                                         .stream()
                                         .flatMap(impl -> Arrays.stream(impl.getConstructors()))
@@ -141,7 +140,6 @@ public class DecoratorConstructorsCompletionContributor extends CompletionContri
         }
 
         private LookupElementBuilder lookupElement(PsiClass parentInterface, PsiMethod decorator) {
-            //TODO lookup if >= 2 parentIfc in args.
             DecoratedExpression constructor = new DecoratedExpression(originalExpression.getText(), decorator, parentInterface);
             return LookupElementBuilder.create(constructor)
                                        .withTailText(constructor.parameters())
