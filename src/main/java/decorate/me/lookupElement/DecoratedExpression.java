@@ -4,8 +4,6 @@ import com.intellij.lang.jvm.JvmParameter;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.impl.source.PsiClassReferenceType;
 
 import java.util.Arrays;
 import java.util.function.Function;
@@ -47,18 +45,8 @@ public class DecoratedExpression {
 
     private Function<JvmParameter, String>  typeAndName = p -> {
         if (p instanceof PsiParameter) {
-            PsiType type = ((PsiParameter) p).getType();
-            if (type instanceof PsiClassReferenceType) {
-                return typeAndName(p, ((PsiClassReferenceType) type).getReference().getReferenceName());
-            }
-            return typeAndName(p, ((PsiType)p.getType()).getPresentableText());
+            return ((PsiParameter) p).getText();
         }
-        return "NOTSUPPORTED";
+        return "NOT SUPPORTED TYPE";
     };
-
-    private String typeAndName(JvmParameter p, String type) {
-        return String.format("%s %s",
-                type,
-                p.getName());
-    }
 }
