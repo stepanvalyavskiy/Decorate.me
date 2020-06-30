@@ -4,8 +4,12 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.lang.jvm.JvmParameter;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiNewExpression;
 import com.intellij.psi.PsiParameter;
+import com.intellij.psi.codeStyle.JavaCodeStyleManager;
+import com.intellij.psi.util.PsiTreeUtil;
 import decorate.me.lookupElement.Decorator;
 import icons.ElegantObjects;
 
@@ -30,6 +34,7 @@ public class DecoratorExpression implements Decorator {
     @Override
     public final LookupElementBuilder lookupElement() {
         return LookupElementBuilder.create(expression())
+                                   .withPsiElement(decorator)
                                    .withTailText(parameters(this::typeAndName))
                                    .withTypeText(parentInterface())
                                    .withPresentableText(name())
@@ -37,14 +42,17 @@ public class DecoratorExpression implements Decorator {
                                    .withLookupString("wrap " + name())
                                    .withIcon(ElegantObjects.CACTUS)
                                    .withInsertHandler((context, item) -> {
-                                       //TODO avoid getDocument
                                        WriteCommandAction.runWriteCommandAction(context.getProject(), () -> {
-                                           //originalExpression.getTextLength()
-                                           context.getDocument().replaceString(context.getStartOffset() - original.length() - 1, context.getStartOffset(), "");
+                                           int startOffset = context.getStartOffset() - original.length() - 1;
+                                           context.getDocument().deleteString(startOffset, context.getStartOffset());
                                            //TODO if i can solve it with PsiElement.replace?
-                                           //PsiExpression decoratingExpression = JavaPsiFacade.getInstance(originalExpression.getProject()).getParserFacade().createExpressionFromText(constructor.toString(), null);
-                                           //PsiElement newExpression = originalExpression.replace(decoratingExpression);
-                                           //JavaCodeStyleManager.getInstance(context.getProject()).shortenClassReferences(newExpression);
+                                           PsiDocumentManager.getInstance(context.getProject())
+                                                             .commitDocument(context.getDocument());
+                                           PsiNewExpression newExpression = PsiTreeUtil.getParentOfType(
+                                                   context.getFile().getViewProvider().findElementAt(startOffset),
+                                                   PsiNewExpression.class
+                                           );
+                                           JavaCodeStyleManager.getInstance(context.getProject()).shortenClassReferences(newExpression);
                                        });
                                    });
     }
@@ -58,7 +66,7 @@ public class DecoratorExpression implements Decorator {
 
     private String expression() {
         //decorator.getContainingClass().getQualifiedName() - qName
-        return "new " + decorator.getName() + parameters(this::typeAndNameDummy);
+        return "new " + decorator.getContainingClass().getQualifiedName() + parameters(this::typeAndNameDummy);
     }
 
     private String parameters(BiFunction<Integer, JvmParameter, String> typeAndName) {
@@ -80,7 +88,6 @@ public class DecoratorExpression implements Decorator {
     private String typeAndNameDummy(int index, JvmParameter ignored) {
         String name = "";
         if (this.index == index) {
-            int i = name.lastIndexOf(' ');
             name = original;
         }
         return name;
