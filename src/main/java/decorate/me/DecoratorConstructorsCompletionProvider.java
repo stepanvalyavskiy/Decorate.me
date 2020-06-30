@@ -26,7 +26,10 @@ class DecoratorConstructorsCompletionProvider extends CompletionProvider<Complet
                 new Decorators(
                         psiExpressionToDecorate.content(),
                         new ConstructorsWithParameters(
-                                new ImplementedInterfaces(psiExpressionToDecorate.myClass()),
+                                new ImplementedInterfaces(
+                                        psiExpressionToDecorate.myClass(),
+                                        psiExpressionToDecorate.myTypes()
+                                        ),
                                 completionParameters.getEditor().getProject()
                         )
                 ).flush(completionResultSet);

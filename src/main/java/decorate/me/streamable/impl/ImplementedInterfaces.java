@@ -1,6 +1,8 @@
 package decorate.me.streamable.impl;
 
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiModifier;
+import com.intellij.psi.PsiType;
 import decorate.me.streamable.Streamable;
 
 import java.util.ArrayDeque;
@@ -12,10 +14,12 @@ import java.util.stream.Stream;
 public class ImplementedInterfaces implements Streamable<PsiClass> {
 
     private final PsiClass sourcePsiClass;
+    private PsiType[] sourcePsiTypes;
     private final Set<PsiClass> implementedInterfaces;
 
-    public ImplementedInterfaces(PsiClass sourcePsiClass) {
+    public ImplementedInterfaces(PsiClass sourcePsiClass, PsiType[] sourcePsiTypes) {
         this.sourcePsiClass = sourcePsiClass;
+        this.sourcePsiTypes = sourcePsiTypes;
         this.implementedInterfaces = implementedInterfaces();
     }
 
@@ -29,7 +33,17 @@ public class ImplementedInterfaces implements Streamable<PsiClass> {
         PsiClass sourcePsiClass = this.sourcePsiClass;
         while (sourcePsiClass.getSuperClass() != null) {
             sourcePsiClass = sourcePsiClass.getSuperClass();
+            if (sourcePsiClass.getModifierList().hasModifierProperty(PsiModifier.ABSTRACT)) {
+                psiFirstLevelInterfaces.add(sourcePsiClass);
+            }
             psiFirstLevelInterfaces.addAll(Arrays.asList(sourcePsiClass.getInterfaces()));
+//            TODO with types
+//            Arrays.stream(sourcePsiClass.getInterfaceTypes())
+//                  .collect(Collectors.toMap(
+//                          JvmReferenceType::resolve,
+//                          JvmReferenceType::typeArguments
+//                          )
+//                  );
         }
         ArrayDeque<PsiClass> interfaces = new ArrayDeque<>(psiFirstLevelInterfaces);
         Set<PsiClass> psiInterfacesTree = new HashSet<>();

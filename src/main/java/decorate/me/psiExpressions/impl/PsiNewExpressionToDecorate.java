@@ -5,6 +5,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiNewExpression;
 import com.intellij.psi.PsiReferenceExpression;
+import com.intellij.psi.PsiType;
 import com.intellij.psi.util.PsiTreeUtil;
 import decorate.me.psiExpressions.PsiExpressionToDecorate;
 
@@ -13,10 +14,12 @@ import java.util.Optional;
 public class PsiNewExpressionToDecorate implements PsiExpressionToDecorate {
     private final PsiNewExpression psiExpression;
     private final PsiClass psiClass;
+    private final PsiType[] psiTypes;
 
     public PsiNewExpressionToDecorate(CompletionParameters completionParameters) {
         psiExpression = psiExpression(completionParameters);
         psiClass = psiClass();
+        psiTypes = psiTypes();
     }
 
     @Override
@@ -27,6 +30,11 @@ public class PsiNewExpressionToDecorate implements PsiExpressionToDecorate {
     @Override
     public PsiClass myClass() {
         return psiClass;
+    }
+
+    @Override
+    public PsiType[] myTypes() {
+        return psiTypes;
     }
 
     private PsiNewExpression psiExpression(CompletionParameters completionParameters) {
@@ -50,5 +58,12 @@ public class PsiNewExpressionToDecorate implements PsiExpressionToDecorate {
                        .map(PsiJavaCodeReferenceElement::resolve)
                        .map(PsiClass.class::cast)
                        .orElse(null);
+    }
+
+    private PsiType[] psiTypes() {
+        return Optional.of(psiExpression)
+                       .map(PsiNewExpression::getClassReference)
+                       .map(PsiJavaCodeReferenceElement::getTypeParameters)
+                       .orElse(new PsiType[0]);
     }
 }
