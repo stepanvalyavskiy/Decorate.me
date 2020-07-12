@@ -10,7 +10,7 @@ public class DecoratorConstructorsCompletionContributor extends CompletionContri
         Iterable<ExpressionToDecorate> expressionsToDecorate = new InheritorsInstances<>(ExpressionToDecorate.class);
         expressionsToDecorate.forEach(
                 expressionToDecorate ->
-                        extend(CompletionType.BASIC,
+                        extend(CompletionType.SMART,
                                 expressionToDecorate.pattern(),
                                 new DecoratorConstructorsCompletionProvider(expressionToDecorate)
                         )

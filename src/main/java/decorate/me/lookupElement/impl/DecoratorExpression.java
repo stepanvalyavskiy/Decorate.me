@@ -40,7 +40,7 @@ public class DecoratorExpression implements Decorator {
                                    .withPresentableText(name())
                                    .withLookupString(name())
                                    .withLookupString("wrap " + name())
-                                   .withIcon(ElegantObjects.CACTUS)
+                                   .withIcon(ElegantObjects.CLASS)
                                    .withInsertHandler((context, item) -> {
                                        WriteCommandAction.runWriteCommandAction(context.getProject(), () -> {
                                            int startOffset = context.getStartOffset() - original.length() - 1;
