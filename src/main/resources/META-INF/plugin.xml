@@ -7,9 +7,8 @@
     Wraps constructors in decorating constructors using completions.<br/><br/>
     Are your classes obese?<br/>
     Stop feeding them code!<br/>
-    Let decorators gobble up your classes before they get too fat.<br/><br/>
+    Better feed them to Decoratman.<br/><br/>
 
-    <a href="https://youtu.be/ZPHrfJN6f9Q">How it works</a>
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
