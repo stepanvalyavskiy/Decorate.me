@@ -1,10 +1,15 @@
 <idea-plugin>
     <id>clueqva.Decorate.me</id>
-    <name>me.Decorated</name>
+    <name>Elegant IDE</name>
     <vendor email="stepanvalyavskiy@gmail.com" url="https://www.linkedin.com/in/stepan-valiavskii"/>
 
     <description><![CDATA[
-    wraps constructors in the decorating constructors using completions
+    Wraps constructors in decorating constructors using completions.<br/><br/>
+    Are your classes obese?<br/>
+    Stop feeding them code!<br/>
+    Let decorators gobble up your classes before they get too fat.<br/><br/>
+
+    <a href="https://youtu.be/ZPHrfJN6f9Q">How it works</a>
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
