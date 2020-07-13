@@ -11,6 +11,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
+/**
+ * Stream with a set of interfaces and abstract classes that are parents for given class {@link #sourcePsiClass}
+ */
 public class ImplementedInterfaces implements Streamable<PsiClass> {
 
     private final PsiClass sourcePsiClass;
@@ -23,6 +26,9 @@ public class ImplementedInterfaces implements Streamable<PsiClass> {
         this.implementedInterfaces = implementedInterfaces();
     }
 
+    /**
+     * @return Stream with a set of interfaces and abstract classes that are parents for given class {@link #sourcePsiClass}
+     */
     @Override
     public Stream<PsiClass>  stream() {
         return implementedInterfaces.stream();

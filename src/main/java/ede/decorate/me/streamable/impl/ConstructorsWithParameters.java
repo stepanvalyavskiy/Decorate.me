@@ -14,6 +14,9 @@ import java.util.stream.Stream;
 
 import static ede.decorate.me.streamable.impl.ConstructorsWithParameters.CtorToIfc;
 
+/**
+ * Stream with a map constructor to interface/abstract class.
+ */
 public class ConstructorsWithParameters implements Streamable<CtorToIfc> {
     private final Streamable<PsiClass> implementedInterfaces;
     private final Project project;
@@ -23,6 +26,13 @@ public class ConstructorsWithParameters implements Streamable<CtorToIfc> {
         this.project = project;
     }
 
+    /**
+     * @return Stream with a map constructor to interface/abstract class.
+     * If constructor has a parameter with the same type as given interface/abstract class (from {@link #implementedInterfaces}),
+     * and belongs to the class that implements this interface/extends this abstract class
+     * they will be mapped and added to result stream.
+     * if one ctor has N parameters with the same type as given interface/abstract class, there will be N mapped pairs.
+     */
     @Override
     public Stream<CtorToIfc> stream() {
         return implementedInterfaces
