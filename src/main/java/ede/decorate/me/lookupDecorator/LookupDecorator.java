@@ -1,7 +1,7 @@
-package decorate.me.lookupElement;
+package ede.decorate.me.lookupDecorator;
 
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 
-public interface Decorator {
+public interface LookupDecorator {
     LookupElementBuilder lookupElement();
 }

@@ -1,15 +1,16 @@
-package decorate.me.lookupElement.impl;
+package ede.decorate.me.lookupDecorator.impl;
 
 import com.intellij.lang.jvm.JvmParameter;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 
 public class SharedDecoratorExpression extends DecoratorExpression {
 
     private final Integer index;
 
-    public SharedDecoratorExpression(String original, PsiMethod decorator, PsiClass parentInterface, Integer index) {
-        super(original, decorator, parentInterface, index);
+    public SharedDecoratorExpression(String original, Class<? extends PsiElement> clazz , PsiMethod decorator, PsiClass parentInterface, Integer index) {
+        super(original, clazz, decorator, parentInterface, index);
         this.index = index;
     }
 

@@ -1,4 +1,4 @@
-package decorate.me.streamable;
+package ede.decorate.me.streamable;
 
 import java.util.stream.Stream;
 

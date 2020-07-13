@@ -1,4 +1,4 @@
-package decorate.me.streamable.impl;
+package ede.decorate.me.streamable.impl;
 
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.util.PsiUtil;
-import decorate.me.lookupElement.impl.DecoratorExpression;
-import decorate.me.lookupElement.impl.SharedDecoratorExpression;
-import decorate.me.streamable.Streamable;
+import ede.decorate.me.lookupDecorator.impl.DecoratorExpression;
+import ede.decorate.me.lookupDecorator.impl.SharedDecoratorExpression;
+import ede.decorate.me.streamable.Streamable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -18,13 +18,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static decorate.me.streamable.impl.ConstructorsWithParameters.CtorToIfc;
-
 public class Decorators implements Streamable<LookupElementBuilder> {
     private final PsiElement content;
-    private final Streamable<CtorToIfc> constructors;
+    private final Streamable<ConstructorsWithParameters.CtorToIfc> constructors;
 
-    public Decorators(PsiElement content, Streamable<CtorToIfc> constructors) {
+    public Decorators(PsiElement content, Streamable<ConstructorsWithParameters.CtorToIfc> constructors) {
         this.content = content;
         this.constructors = constructors;
     }
@@ -46,6 +44,7 @@ public class Decorators implements Streamable<LookupElementBuilder> {
             return Stream.of(
                     new DecoratorExpression(
                             content.getText(),
+                            content.getClass(),
                             ctor,
                             parentInterface,
                             indexes.get(0)
@@ -56,6 +55,7 @@ public class Decorators implements Streamable<LookupElementBuilder> {
                           .map(index ->
                                   new SharedDecoratorExpression(
                                           content.getText(),
+                                          content.getClass(),
                                           ctor,
                                           parentInterface,
                                           index

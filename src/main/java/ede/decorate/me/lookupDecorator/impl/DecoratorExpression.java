@@ -1,31 +1,34 @@
-package decorate.me.lookupElement.impl;
+package ede.decorate.me.lookupDecorator.impl;
 
+import com.intellij.codeInsight.completion.InsertionContext;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.lang.jvm.JvmParameter;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiDocumentManager;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiNewExpression;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
-import decorate.me.lookupElement.Decorator;
-import icons.ElegantObjects;
+import ede.decorate.me.icons.ElegantObjects;
+import ede.decorate.me.lookupDecorator.LookupDecorator;
 
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class DecoratorExpression implements Decorator {
+public class DecoratorExpression implements LookupDecorator {
 
     private final String original;
+    private Class<? extends PsiElement> clazz;
     private final PsiMethod decorator;
     private final PsiClass parentInterface;
     private final Integer index;
 
-    public DecoratorExpression(String original, PsiMethod decorator, PsiClass parentInterface, Integer index) {
+    public DecoratorExpression(String original, Class<? extends PsiElement> clazz, PsiMethod decorator, PsiClass parentInterface, Integer index) {
         this.original = original;
+        this.clazz = clazz;
         this.decorator = decorator;
         this.parentInterface = parentInterface;
         this.index = index;
@@ -43,21 +46,24 @@ public class DecoratorExpression implements Decorator {
                                    .withIcon(ElegantObjects.CLASS)
                                    .withInsertHandler((context, item) -> {
                                        WriteCommandAction.runWriteCommandAction(context.getProject(), () -> {
-                                           int startOffset = context.getStartOffset() - original.length() - 1;
-                                           context.getDocument().deleteString(startOffset, context.getStartOffset());
-                                           //TODO if i can solve it with PsiElement.replace?
-                                           PsiDocumentManager.getInstance(context.getProject())
-                                                             .commitDocument(context.getDocument());
-                                           PsiNewExpression newExpression = PsiTreeUtil.getParentOfType(
-                                                   context.getFile().getViewProvider().findElementAt(startOffset),
-                                                   PsiNewExpression.class
+                                           int originalExpressionStartOffset = context.getStartOffset() - original.length() - 1;
+                                           deleteOriginalExpression(context, originalExpressionStartOffset);
+                                           PsiElement decoratorExpression = PsiTreeUtil.getParentOfType(
+                                                   context.getFile().getViewProvider().findElementAt(originalExpressionStartOffset),
+                                                   clazz
                                            );
-                                           JavaCodeStyleManager.getInstance(context.getProject()).shortenClassReferences(newExpression);
+                                           JavaCodeStyleManager.getInstance(context.getProject()).shortenClassReferences(decoratorExpression);
                                        });
                                    });
     }
 
-     String typeAndName(int ignored, JvmParameter parameter) {
+    private void deleteOriginalExpression(InsertionContext context, int originalExpressionStartOffset) {
+        context.getDocument().deleteString(originalExpressionStartOffset, context.getStartOffset());
+        PsiDocumentManager.getInstance(context.getProject())
+                          .commitDocument(context.getDocument());
+    }
+
+    String typeAndName(int ignored, JvmParameter parameter) {
         if (parameter instanceof PsiParameter) {
             return ((PsiParameter) parameter).getText();
         }

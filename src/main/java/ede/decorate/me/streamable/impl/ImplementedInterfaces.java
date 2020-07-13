@@ -1,9 +1,9 @@
-package decorate.me.streamable.impl;
+package ede.decorate.me.streamable.impl;
 
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiType;
-import decorate.me.streamable.Streamable;
+import ede.decorate.me.streamable.Streamable;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;

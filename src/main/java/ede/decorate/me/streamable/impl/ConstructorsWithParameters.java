@@ -1,18 +1,18 @@
-package decorate.me.streamable.impl;
+package ede.decorate.me.streamable.impl;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.searches.ClassInheritorsSearch;
-import decorate.me.streamable.Streamable;
+import ede.decorate.me.streamable.Streamable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-import static decorate.me.streamable.impl.ConstructorsWithParameters.CtorToIfc;
+import static ede.decorate.me.streamable.impl.ConstructorsWithParameters.CtorToIfc;
 
 public class ConstructorsWithParameters implements Streamable<CtorToIfc> {
     private final Streamable<PsiClass> implementedInterfaces;

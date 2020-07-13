@@ -17,7 +17,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <completion.contributor language="JAVA"
-                                implementationClass="decorate.me.DecoratorConstructorsCompletionContributor"/>
+                                implementationClass="ede.decorate.me.DecoratorConstructorsCompletionContributor"/>
     </extensions>
 
     <actions>

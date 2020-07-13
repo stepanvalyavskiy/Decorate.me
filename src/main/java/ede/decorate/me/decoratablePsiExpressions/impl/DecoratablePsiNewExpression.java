@@ -1,23 +1,23 @@
-package decorate.me.psiExpressions.impl;
+package ede.decorate.me.decoratablePsiExpressions.impl;
 
-import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiNewExpression;
 import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.util.PsiTreeUtil;
-import decorate.me.psiExpressions.PsiExpressionToDecorate;
+import ede.decorate.me.decoratablePsiExpressions.DecoratablePsiExpression;
 
 import java.util.Optional;
 
-public class PsiNewExpressionToDecorate implements PsiExpressionToDecorate {
+public class DecoratablePsiNewExpression implements DecoratablePsiExpression {
     private final PsiNewExpression psiExpression;
     private final PsiClass psiClass;
     private final PsiType[] psiTypes;
 
-    public PsiNewExpressionToDecorate(CompletionParameters completionParameters) {
-        psiExpression = psiExpression(completionParameters);
+    public DecoratablePsiNewExpression(PsiElement position) {
+        psiExpression = psiExpression(position);
         psiClass = psiClass();
         psiTypes = psiTypes();
     }
@@ -37,10 +37,10 @@ public class PsiNewExpressionToDecorate implements PsiExpressionToDecorate {
         return psiTypes;
     }
 
-    private PsiNewExpression psiExpression(CompletionParameters completionParameters) {
+    private PsiNewExpression psiExpression(PsiElement position) {
         return PsiTreeUtil.getChildOfType(
                 PsiTreeUtil.getParentOfType(
-                        completionParameters.getPosition(),
+                        position,
                         PsiReferenceExpression.class
                 ),
                 PsiNewExpression.class
