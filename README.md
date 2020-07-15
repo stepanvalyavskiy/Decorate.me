@@ -48,8 +48,7 @@ It generates a zip in `/build/distributions/`
 After that you have to install it manually in your IDE.
   - <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd> > <kbd>Upload that zip</kbd>
   
-
-##How it works:
+## How it works:
 Axiom: If two classes implement same interface or abstract class, 
 and the second one has at least one constructor,
 which has this interface or abstract class as argument, 
@@ -73,7 +72,7 @@ Decorator's constructor will be in completion list.
 
 ![example](src/main/resources/readme/example.PNG?raw=true "example")
 
-##Contribution
+## Contribution
 You can contribute by forking the repo and sending a pull request. 
 We will review your changes and apply them to the master branch.
 

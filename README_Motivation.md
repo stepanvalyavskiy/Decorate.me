@@ -53,7 +53,7 @@ more concrete example, that's [it](https://youtu.be/LPLqLaSwSsI?t=6739).
 
 Loose translation: coming soon.
 
-#How the plugin solve this probleb?
+# How the plugin solve this probleb?
 
 Watch this self-explanatory [video](https://youtu.be/ZPHrfJN6f9Q) at first.
 
