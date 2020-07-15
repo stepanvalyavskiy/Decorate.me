@@ -34,6 +34,13 @@ public class ImplementedInterfaces implements Streamable<PsiClass> {
         return implementedInterfaces.stream();
     }
 
+    /**
+     * InputStream is an abstract class
+     * and doesn't implement some interface related to input streams.
+     * All its decorating constructor have this abstract class as argument.
+     * Therefor I should consider abstract classes on a par with interfaces
+     * to provide decorators completions for such classes
+     */
     private Set<PsiClass> implementedInterfaces() {
         Set<PsiClass> psiFirstLevelInterfaces = new HashSet<>(Arrays.asList(sourcePsiClass.getInterfaces()));
         PsiClass sourcePsiClass = this.sourcePsiClass;
