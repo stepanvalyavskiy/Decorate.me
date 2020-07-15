@@ -1,4 +1,4 @@
-<img height="408" width="800" src="src/main/resources/readme/preview.gif" alt="demo">
+<img src="src/main/resources/readme/pluginIcon.svg" height="100px"  alt="pluginIcon"/>
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org) 
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
@@ -20,11 +20,15 @@ We like decorators and want to conveniently work with them.<br/>
 See more detailed answer [here](README_Motivation.md) or watch this two minute [video](https://youtu.be/ZPHrfJN6f9Q)
  
 **How to use**
-- Using IDE built-in plugin system on Windows:
+
+> Make sure the plugin supports your Intellij IDEA version. 
+> Check compatibility [here](https://plugins.jetbrains.com/plugin/14706-elegant-ide/versions)
+
+- Install using IDE built-in plugin system on Windows:
   - <kbd>File</kbd> > <kbd>Settings</kbd> > <kbd>Plugins</kbd> > <kbd>Manage Plugin Repositiries...</kbd> > <kbd>Add "https://plugins.jetbrains.com/plugins/alpha/list"</kbd> > <kbd>Ok</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Elegant IDE"</kbd> > <kbd>Install Plugin</kbd>
-- Using IDE built-in plugin system on MacOs:
+- Install using IDE built-in plugin system on MacOs:
   - <kbd>Preferences</kbd> > <kbd>Settings</kbd> > <kbd>Plugins</kbd> > <kbd>Manage Plugin Repositiries...</kbd> > <kbd>Add "https://plugins.jetbrains.com/plugins/alpha/list"</kbd> > <kbd>Ok</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Elegant IDE"</kbd> > <kbd>Install Plugin</kbd>
-- Manually:
+- Install manually:
   - Download the [latest release](https://plugins.jetbrains.com/plugin/14706-elegant-ide) and install it manually using <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
 
 **How to start developing**
@@ -47,6 +51,9 @@ Check out and build the plugin
 It generates a zip in `/build/distributions/`
 After that you have to install it manually in your IDE.
   - <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd> > <kbd>Upload that zip</kbd>
+  
+## In Action
+<img height="408" width="800" src="src/main/resources/readme/preview.gif" alt="demo">
   
 ## How it works:
 Axiom: If two classes implement same interface or abstract class, 
@@ -78,4 +85,3 @@ We will review your changes and apply them to the master branch.
 
 You are also welcome if you want to help me with CircleCI.
 Pleas contact me at Telegram @clueqva.
-
