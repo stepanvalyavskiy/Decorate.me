@@ -4,10 +4,7 @@
     <vendor email="stepanvalyavskiy@gmail.com" url="https://www.linkedin.com/in/stepan-valiavskii"/>
 
     <description><![CDATA[
-    Wraps constructors in decorating constructors using completions.<br/><br/>
-    Are your classes obese?<br/>
-    Stop feeding them code!<br/>
-    Better feed them to Decoratman.<br/><br/>
+    Wraps constructors in decorating constructors using completions.<br/>
 
     ]]></description>
 

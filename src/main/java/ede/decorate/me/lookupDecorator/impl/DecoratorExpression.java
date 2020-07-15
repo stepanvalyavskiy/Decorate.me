@@ -43,7 +43,7 @@ public class DecoratorExpression implements LookupDecorator {
                                    .withPresentableText(name())
                                    .withLookupString(name())
                                    .withLookupString("wrap " + name())
-                                   .withIcon(ElegantObjects.CLASS)
+                                   .withIcon(ElegantObjects.CACTOOS)
                                    .withInsertHandler((context, item) -> {
                                        WriteCommandAction.runWriteCommandAction(context.getProject(), () -> {
                                            int originalExpressionStartOffset = context.getStartOffset() - original.length() - 1;
