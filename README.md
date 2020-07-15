@@ -4,6 +4,7 @@
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org) [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
+
 # Prehistory:
 I watched [the speech](https://youtu.be/75U9eefFYoU) and was struck by the beauty of an elegant object-oriented code in comparison with the procedural one.
 One of the main ideas is that classes should not have many methods, there should be many classes with a minimal set of methods.
