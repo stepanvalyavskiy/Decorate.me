@@ -45,7 +45,7 @@ Check out and build the plugin
 *debug the plugin or see how your changes affected its behavior* in embedded idea(community edition) with the plugin on board.
 - <kbd>Gradle</kbd> > <kbd>Tasks</kbd> > <kbd>intellij</kbd> > <kbd>Run or Debug "runIde"</kbd>
 
-*install the plugin with your changes to your own idea*
+*build and install the plugin to your own idea*
   - <kbd>Gradle</kbd> > <kbd>Tasks</kbd> > <kbd>intellij</kbd> > <kbd>buildPlugin</kbd>
   
 It generates a zip in `/build/distributions/`
@@ -82,6 +82,3 @@ Decorator's constructor will be in completion list.
 ## Contribution
 You can contribute by forking the repo and sending a pull request. 
 We will review your changes and apply them to the master branch.
-
-You are also welcome if you want to help me with CircleCI.
-Pleas contact me at Telegram @clueqva.
