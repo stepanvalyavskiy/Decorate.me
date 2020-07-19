@@ -7,7 +7,6 @@ import org.reflections.Reflections;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.Spliterator;
 import java.util.stream.Collectors;
 
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
  * Exactly one instance for each implementation.
  * @param <T> - parent Interface
  */
-public class InheritorsInstances<T> implements Iterable<T> {
+public final class InheritorsInstances<T> implements Iterable<T> {
     private final List<T> inheritorsInstances;
 
     /**
@@ -26,10 +25,11 @@ public class InheritorsInstances<T> implements Iterable<T> {
      * @param ifc - parent Interface
      */
     public InheritorsInstances(Class<T> ifc) {
-        Reflections scanner = new Reflections("ede.decorate.me");
-        Set<Class<? extends T>> inheritors = scanner.getSubTypesOf(ifc);
-        inheritorsInstances = inheritors.stream().map(this::newInstance).collect(Collectors.toUnmodifiableList());
-
+           inheritorsInstances = new Reflections("ede.decorate.me")
+                .getSubTypesOf(ifc)
+                .stream()
+                .map(this::newInstance)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @NotNull

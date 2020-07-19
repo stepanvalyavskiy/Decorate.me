@@ -12,58 +12,56 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-import static ede.decorate.me.streamable.impl.ConstructorsWithParameters.CtorToIfc;
-
 /**
  * Stream with a map constructor to interface/abstract class.
  */
-public class ConstructorsWithParameters implements Streamable<CtorToIfc> {
-    private final Streamable<PsiClass> implementedInterfaces;
+public final class ConstructorsWithParameters implements Streamable<ConstructorsWithParameters.ConstructorToSuperType> {
+    private final Streamable<PsiClass> superTypes;
     private final Project project;
 
-    public ConstructorsWithParameters(Streamable<PsiClass> implementedInterfaces, Project project) {
-        this.implementedInterfaces = implementedInterfaces;
+    public ConstructorsWithParameters(Streamable<PsiClass> superTypes, Project project) {
+        this.superTypes = superTypes;
         this.project = project;
     }
 
     /**
      * @return Stream with a map constructor to interface/abstract class.
-     * If constructor has a parameter with the same type as given interface/abstract class (from {@link #implementedInterfaces}),
+     * If constructor has a parameter with the same type as given interface/abstract class (from {@link #superTypes}),
      * and belongs to the class that implements this interface/extends this abstract class
      * they will be mapped and added to result stream.
      * if one ctor has N parameters with the same type as given interface/abstract class, there will be N mapped pairs.
      */
     @Override
-    public Stream<CtorToIfc> stream() {
-        return implementedInterfaces
+    public Stream<ConstructorToSuperType> stream() {
+        return superTypes
                 .stream()
-                .flatMap(this::constructorsWithParameters);
+                .flatMap(this::constructorsWithParametersToSuperType);
     }
 
-    private Stream<CtorToIfc> constructorsWithParameters(PsiClass parentInterface) {
-        return candidatesForIfc(parentInterface)
+    private Stream<ConstructorToSuperType> constructorsWithParametersToSuperType(PsiClass superType) {
+        return subTypesFor(superType)
                 .stream()
                 .flatMap(impl -> Arrays.stream(impl.getConstructors()))
                 .filter(PsiMethod::hasParameters)
-                .map(ctor -> new CtorToIfc(ctor, parentInterface));
+                .map(ctor -> new ConstructorToSuperType(ctor, superType));
     }
 
     @NotNull
-    private Collection<PsiClass> candidatesForIfc(PsiClass parentInterface) {
+    private Collection<PsiClass> subTypesFor(PsiClass superType) {
         return ClassInheritorsSearch.search(
-                parentInterface,
+                superType,
                 GlobalSearchScope.allScope(project),
                 true
         ).findAll();
     }
 
-    static public class CtorToIfc {
+    static public class ConstructorToSuperType {
         public final PsiMethod ctor;
-        public final PsiClass ifc;
+        public final PsiClass superType;
 
-        public CtorToIfc(PsiMethod ctor, PsiClass ifc) {
+        public ConstructorToSuperType(PsiMethod ctor, PsiClass superType) {
             this.ctor = ctor;
-            this.ifc = ifc;
+            this.superType = superType;
         }
     }
 

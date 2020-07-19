@@ -15,16 +15,18 @@ import ede.decorate.me.icons.ElegantObjects;
 import ede.decorate.me.lookupDecorator.LookupDecorator;
 
 import java.util.function.BiFunction;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class DecoratorExpression implements LookupDecorator {
+public final class DecoratorExpression implements LookupDecorator {
 
     private final String original;
     private Class<? extends PsiElement> clazz;
     private final PsiMethod decorator;
     private final PsiClass parentInterface;
     private final Integer index;
+    private UnaryOperator<String> marker;
 
     public DecoratorExpression(String original, Class<? extends PsiElement> clazz, PsiMethod decorator, PsiClass parentInterface, Integer index) {
         this.original = original;
@@ -32,6 +34,16 @@ public class DecoratorExpression implements LookupDecorator {
         this.decorator = decorator;
         this.parentInterface = parentInterface;
         this.index = index;
+        this.marker = noMarkedString -> noMarkedString;
+    }
+
+    public DecoratorExpression(String original, Class<? extends PsiElement> clazz, PsiMethod decorator, PsiClass parentInterface, Integer index, UnaryOperator<String> marker) {
+        this.original = original;
+        this.clazz = clazz;
+        this.decorator = decorator;
+        this.parentInterface = parentInterface;
+        this.index = index;
+        this.marker = marker;
     }
 
     @Override
@@ -63,9 +75,13 @@ public class DecoratorExpression implements LookupDecorator {
                           .commitDocument(context.getDocument());
     }
 
-    String typeAndName(int ignored, JvmParameter parameter) {
+    private String typeAndName(int index, JvmParameter parameter) {
         if (parameter instanceof PsiParameter) {
-            return ((PsiParameter) parameter).getText();
+            String name = ((PsiParameter) parameter).getText();
+            if (index == this.index) {
+                name =  marker.apply(name);
+            }
+            return name;
         }
         return "NOT SUPPORTED TYPE";
     }

@@ -9,7 +9,6 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.util.PsiUtil;
 import ede.decorate.me.lookupDecorator.impl.DecoratorExpression;
-import ede.decorate.me.lookupDecorator.impl.SharedDecoratorExpression;
 import ede.decorate.me.streamable.Streamable;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,11 +17,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Decorators implements Streamable<LookupElementBuilder> {
+public final class Decorators implements Streamable<LookupElementBuilder> {
     private final PsiElement content;
-    private final Streamable<ConstructorsWithParameters.CtorToIfc> constructors;
+    private final Streamable<ConstructorsWithParameters.ConstructorToSuperType> constructors;
 
-    public Decorators(PsiElement content, Streamable<ConstructorsWithParameters.CtorToIfc> constructors) {
+    public Decorators(PsiElement content, Streamable<ConstructorsWithParameters.ConstructorToSuperType> constructors) {
         this.content = content;
         this.constructors = constructors;
     }
@@ -31,41 +30,42 @@ public class Decorators implements Streamable<LookupElementBuilder> {
     public Stream<LookupElementBuilder> stream() {
         return constructors
                 .stream()
-                .flatMap(ctorToIfc -> decoratorsOf(ctorToIfc.ctor, ctorToIfc.ifc));
+                .flatMap(ctorToSuperType -> decoratorsOf(ctorToSuperType.ctor, ctorToSuperType.superType));
     }
 
     public void flush(CompletionResultSet completionResultSet) {
         stream().forEach(completionResultSet::addElement);
     }
 
-    private Stream<LookupElementBuilder> decoratorsOf(PsiMethod ctor, PsiClass parentInterface) {
-        List<Integer> indexes = indexes(parentInterface, ctor.getParameters());
+    private Stream<LookupElementBuilder> decoratorsOf(PsiMethod ctor, PsiClass superType) {
+        List<Integer> indexes = indexesOfSuperTypeInCtrParametersList(superType, ctor.getParameters());
         if (indexes.size() == 1) {
             return Stream.of(
                     new DecoratorExpression(
                             content.getText(),
                             content.getClass(),
                             ctor,
-                            parentInterface,
+                            superType,
                             indexes.get(0)
                     ).lookupElement()
             );
         } else {
             return indexes.stream()
                           .map(index ->
-                                  new SharedDecoratorExpression(
+                                  new DecoratorExpression(
                                           content.getText(),
                                           content.getClass(),
                                           ctor,
-                                          parentInterface,
-                                          index
+                                          superType,
+                                          index,
+                                          name -> String.format("[%s]", name)
                                   ).lookupElement()
                           );
         }
     }
 
     @NotNull
-    private List<Integer> indexes(PsiClass parentInterface, JvmParameter[] parameters) {
+    private List<Integer> indexesOfSuperTypeInCtrParametersList(PsiClass parentInterface, JvmParameter[] parameters) {
         return IntStream.range(0, parameters.length)
                         .filter(i -> parentInterface
                                 .isEquivalentTo(

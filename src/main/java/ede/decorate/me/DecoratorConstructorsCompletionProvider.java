@@ -8,10 +8,10 @@ import ede.decorate.me.decoratablePsiExpressions.DecoratablePsiExpression;
 import ede.decorate.me.decoratablePsiExpressions.patternToDecoratablePsiExpression.PatternToDecoratablePsiExpression;
 import ede.decorate.me.streamable.impl.ConstructorsWithParameters;
 import ede.decorate.me.streamable.impl.Decorators;
-import ede.decorate.me.streamable.impl.ImplementedInterfaces;
+import ede.decorate.me.streamable.impl.SuperTypesOf;
 import org.jetbrains.annotations.NotNull;
 
-public class DecoratorConstructorsCompletionProvider extends CompletionProvider<CompletionParameters> {
+public final class DecoratorConstructorsCompletionProvider extends CompletionProvider<CompletionParameters> {
 
     private final PatternToDecoratablePsiExpression expressionToDecorate;
 
@@ -31,7 +31,7 @@ public class DecoratorConstructorsCompletionProvider extends CompletionProvider<
                 new Decorators(
                         psiExpressionToDecorate.content(),
                         new ConstructorsWithParameters(
-                                new ImplementedInterfaces(
+                                new SuperTypesOf(
                                         psiExpressionToDecorate.myClass(),
                                         psiExpressionToDecorate.myTypes()
                                         ),

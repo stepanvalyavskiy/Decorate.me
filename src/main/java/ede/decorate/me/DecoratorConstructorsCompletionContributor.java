@@ -11,7 +11,7 @@ import ede.decorate.me.dependencyManagment.InheritorsInstances;
 /**
  * Completion contributor is needed to register completion providers in Intellij IDEA.
  */
-public class DecoratorConstructorsCompletionContributor extends CompletionContributor {
+public final class DecoratorConstructorsCompletionContributor extends CompletionContributor {
 
     /**
      *  The preferred way to implement code completion is to provide constructor in a contributor and register completion providers there:

@@ -11,7 +11,7 @@ import ede.decorate.me.decoratablePsiExpressions.DecoratablePsiExpression;
 
 import java.util.Optional;
 
-public class DecoratablePsiNewExpression implements DecoratablePsiExpression {
+public final class DecoratablePsiNewExpression implements DecoratablePsiExpression {
     private final PsiNewExpression psiExpression;
     private final PsiClass psiClass;
     private final PsiType[] psiTypes;

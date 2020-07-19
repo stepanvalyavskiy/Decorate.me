@@ -12,7 +12,7 @@ import ede.decorate.me.decoratablePsiExpressions.patternToDecoratablePsiExpressi
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
 @SuppressWarnings("unused")
-public class NewExpression implements PatternToDecoratablePsiExpression {
+public final class NewExpression implements PatternToDecoratablePsiExpression {
 
     @Override
     public PsiElementPattern.Capture<PsiIdentifier> pattern() {
