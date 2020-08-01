@@ -6,7 +6,7 @@ import ede.decorate.me.decoratablePsiExpressions.DecoratablePsiExpression;
 
 /**
  * This class is a pair of pattern and corresponding DecoratablePsiExpression's implementation.
- * This mapping was done to avoid choosing DecoratablePsiExpression's implementation via additional Factory.
+ * This is an abstract factory.
  *
  * This interface has been separated from {@link DecoratablePsiExpression}
  * because {@link ElementPattern} is needed before it is possible to fully initialize a {@link DecoratablePsiExpression} instance.
@@ -28,5 +28,5 @@ public interface PatternToDecoratablePsiExpression {
      * @param position - the position where the completion was called.
      * @return expression to the left of current position that matches to {@link #pattern()}.
      */
-    DecoratablePsiExpression psiExpression(PsiElement position);
+    DecoratablePsiExpression psiDecoratableExpression(PsiElement position);
 }

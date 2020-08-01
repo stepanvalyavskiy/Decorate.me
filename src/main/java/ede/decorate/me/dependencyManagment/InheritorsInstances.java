@@ -24,8 +24,8 @@ public final class InheritorsInstances<T> implements Iterable<T> {
      *
      * @param ifc - parent Interface
      */
-    public InheritorsInstances(Class<T> ifc) {
-           inheritorsInstances = new Reflections("ede.decorate.me")
+    public InheritorsInstances(Class<T> ifc, String path) {
+           inheritorsInstances = new Reflections(path)
                 .getSubTypesOf(ifc)
                 .stream()
                 .map(this::newInstance)

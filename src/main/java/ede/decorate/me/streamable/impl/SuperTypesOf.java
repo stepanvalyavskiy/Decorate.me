@@ -78,10 +78,16 @@ public final class SuperTypesOf implements Streamable<PsiClass> {
         return psiClass.getSuperClass();
     }
 
+    /**
+     * Greatest parent of all interfaces is Object!
+     */
     private boolean hasSuperClass(PsiClass psiClass) {
         return psiClass.getSuperClass() != null;
     }
 
+    /**
+     * Interface also has an ABSTRACT modifier!
+     */
     private boolean isAbstract(PsiClass psiClass) {
         return psiClass.getModifierList() != null && psiClass.getModifierList().hasModifierProperty(PsiModifier.ABSTRACT);
     }

@@ -1,12 +1,25 @@
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.4.18'
+    id 'jacoco'
 }
 
-version '1.1'
+version '1.2'
 
 repositories {
     mavenCentral()
+}
+test {
+    //declare absolute path to your local intellij idea
+    systemProperty "idea.home.path", "set your ideaHomePath here"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
 }
 
 dependencies {
@@ -32,6 +45,8 @@ publishPlugin {
 
 patchPluginXml {
     changeNotes """
+      v1.2<br>
+      completions are also shown after method calls, string literals and class references<br>  
       v1.1<br>
       cactoos is now used as a plugin logo and as a completions icon<br>"""
 }

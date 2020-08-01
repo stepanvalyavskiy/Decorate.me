@@ -11,32 +11,33 @@ import ede.decorate.me.streamable.impl.Decorators;
 import ede.decorate.me.streamable.impl.SuperTypesOf;
 import org.jetbrains.annotations.NotNull;
 
-public final class DecoratorConstructorsCompletionProvider extends CompletionProvider<CompletionParameters> {
+public final class DecoratorsCompletionProvider extends CompletionProvider<CompletionParameters> {
 
     private final PatternToDecoratablePsiExpression expressionToDecorate;
 
-    public DecoratorConstructorsCompletionProvider(PatternToDecoratablePsiExpression expressionToDecorate) {
+    public DecoratorsCompletionProvider(PatternToDecoratablePsiExpression expressionToDecorate) {
         this.expressionToDecorate = expressionToDecorate;
     }
 
     /**
      * The method finds all decorators for given expression and provides them to completion list.
-     *
+     * <p>
      * {@link #expressionToDecorate} - given expression
-     * @param completionResultSet  - subset of completion list.
+     *
+     * @param completionResultSet - subset of completion list.
      */
     @Override
     protected void addCompletions(@NotNull CompletionParameters completionParameters, @NotNull ProcessingContext processingContext, @NotNull CompletionResultSet completionResultSet) {
-        DecoratablePsiExpression psiExpressionToDecorate = expressionToDecorate.psiExpression(completionParameters.getPosition());
-                new Decorators(
-                        psiExpressionToDecorate.content(),
-                        new ConstructorsWithParameters(
-                                new SuperTypesOf(
-                                        psiExpressionToDecorate.myClass(),
-                                        psiExpressionToDecorate.myTypes()
-                                        ),
-                                completionParameters.getEditor().getProject()
-                        )
-                ).flush(completionResultSet);
+        DecoratablePsiExpression psiExpressionToDecorate = expressionToDecorate.psiDecoratableExpression(completionParameters.getPosition());
+        new Decorators(
+                psiExpressionToDecorate.content(),
+                new ConstructorsWithParameters(
+                        new SuperTypesOf(
+                                psiExpressionToDecorate.myClass(),
+                                psiExpressionToDecorate.myTypes()
+                        ),
+                        completionParameters.getEditor().getProject()
+                )
+        ).flush(completionResultSet);
     }
 }

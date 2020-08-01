@@ -80,5 +80,13 @@ Decorator's constructor will be in completion list.
 ![example](src/main/resources/readme/example.PNG?raw=true "example")
 
 ## Contribution
-You can contribute by forking the repo and sending a pull request. 
-We will review your changes and apply them to the master branch.
+You can contribute by forking the repo and sending a pull request.
+
+Before sending a pull request, make sure all tests passed, and you covered your changes with new ones.
+Intellij IDEA instance required for plugin tests, so I can't add them to pipeline on circleci. 
+
+Therefore, you need to run them locally.
+For that you need to declare an absolute path to your local intellij idea in build.gradle and run gradle test. 
+See [JB docs](https://jetbrains.org/intellij/sdk/docs/tutorials/writing_tests_for_plugins/tests_prerequisites.html?search=test).
+
+Then we will review your changes and apply them to the master branch.

@@ -1,28 +1,26 @@
 package ede.decorate.me.decoratablePsiExpressions.patternToDecoratablePsiExpression.impl;
 
-import com.intellij.patterns.PsiElementPattern;
+import com.intellij.patterns.ElementPattern;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIdentifier;
-import com.intellij.psi.PsiNewExpression;
+import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.psi.PsiReferenceExpression;
 import ede.decorate.me.decoratablePsiExpressions.DecoratablePsiExpression;
-import ede.decorate.me.decoratablePsiExpressions.impl.DecoratablePsiNewExpression;
 import ede.decorate.me.decoratablePsiExpressions.patternToDecoratablePsiExpression.PatternToDecoratablePsiExpression;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
 @SuppressWarnings("unused")
-public final class NewExpression implements PatternToDecoratablePsiExpression {
-
+public final class MethodCallExpression implements PatternToDecoratablePsiExpression {
     @Override
-    public PsiElementPattern.Capture<PsiIdentifier> pattern() {
+    public ElementPattern<? extends PsiElement> pattern() {
         return psiElement(PsiIdentifier.class)
                 .withParent(psiElement(PsiReferenceExpression.class)
-                        .withChild(psiElement(PsiNewExpression.class)));
+                        .withChild(psiElement(PsiMethodCallExpression.class)));
     }
 
     @Override
     public DecoratablePsiExpression psiDecoratableExpression(PsiElement position) {
-        return new DecoratablePsiNewExpression(position);
+        return new ede.decorate.me.decoratablePsiExpressions.impl.MethodCallExpression(position);
     }
 }

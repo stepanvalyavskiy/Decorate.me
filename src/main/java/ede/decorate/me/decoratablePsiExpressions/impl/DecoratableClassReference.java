@@ -2,21 +2,21 @@ package ede.decorate.me.decoratablePsiExpressions.impl;
 
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiJavaCodeReferenceElement;
-import com.intellij.psi.PsiNewExpression;
 import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.PsiType;
+import com.intellij.psi.PsiVariable;
+import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.util.PsiTreeUtil;
 import ede.decorate.me.decoratablePsiExpressions.DecoratablePsiExpression;
 
 import java.util.Optional;
 
-public final class DecoratablePsiNewExpression implements DecoratablePsiExpression {
-    private final PsiNewExpression psiExpression;
+public final class DecoratableClassReference implements DecoratablePsiExpression {
+    private final PsiReferenceExpression psiExpression;
     private final PsiClass psiClass;
     private final PsiType[] psiTypes;
 
-    public DecoratablePsiNewExpression(PsiElement position) {
+    public DecoratableClassReference(PsiElement position) {
         psiExpression = psiExpression(position);
         psiClass = psiClass();
         psiTypes = psiTypes();
@@ -37,13 +37,13 @@ public final class DecoratablePsiNewExpression implements DecoratablePsiExpressi
         return psiTypes;
     }
 
-    private PsiNewExpression psiExpression(PsiElement position) {
+    private PsiReferenceExpression psiExpression(PsiElement position) {
         return PsiTreeUtil.getChildOfType(
                 PsiTreeUtil.getParentOfType(
                         position,
                         PsiReferenceExpression.class
                 ),
-                PsiNewExpression.class
+                PsiReferenceExpression.class
         );
     }
 
@@ -54,16 +54,15 @@ public final class DecoratablePsiNewExpression implements DecoratablePsiExpressi
      */
     private PsiClass psiClass() {
         return Optional.of(psiExpression)
-                       .map(PsiNewExpression::getClassReference)
-                       .map(PsiJavaCodeReferenceElement::resolve)
-                       .map(PsiClass.class::cast)
+                       .map(PsiReferenceExpression::resolve)
+                       .map(PsiVariable.class::cast)
+                       .map(PsiVariable::getType)
+                       .map(PsiClassReferenceType.class::cast)
+                       .map(PsiClassReferenceType::resolve)
                        .orElse(null);
     }
 
     private PsiType[] psiTypes() {
-        return Optional.of(psiExpression)
-                       .map(PsiNewExpression::getClassReference)
-                       .map(PsiJavaCodeReferenceElement::getTypeParameters)
-                       .orElse(new PsiType[0]);
+        return new PsiType[0];
     }
 }

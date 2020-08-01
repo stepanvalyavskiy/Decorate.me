@@ -8,6 +8,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiNewExpression;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -22,24 +23,21 @@ import java.util.stream.IntStream;
 public final class DecoratorExpression implements LookupDecorator {
 
     private final String original;
-    private Class<? extends PsiElement> clazz;
     private final PsiMethod decorator;
     private final PsiClass parentInterface;
     private final Integer index;
-    private UnaryOperator<String> marker;
+    private final UnaryOperator<String> marker;
 
-    public DecoratorExpression(String original, Class<? extends PsiElement> clazz, PsiMethod decorator, PsiClass parentInterface, Integer index) {
+    public DecoratorExpression(String original, PsiMethod decorator, PsiClass parentInterface, Integer index) {
         this.original = original;
-        this.clazz = clazz;
         this.decorator = decorator;
         this.parentInterface = parentInterface;
         this.index = index;
         this.marker = noMarkedString -> noMarkedString;
     }
 
-    public DecoratorExpression(String original, Class<? extends PsiElement> clazz, PsiMethod decorator, PsiClass parentInterface, Integer index, UnaryOperator<String> marker) {
+    public DecoratorExpression(String original, PsiMethod decorator, PsiClass parentInterface, Integer index, UnaryOperator<String> marker) {
         this.original = original;
-        this.clazz = clazz;
         this.decorator = decorator;
         this.parentInterface = parentInterface;
         this.index = index;
@@ -62,7 +60,7 @@ public final class DecoratorExpression implements LookupDecorator {
                                            deleteOriginalExpression(context, originalExpressionStartOffset);
                                            PsiElement decoratorExpression = PsiTreeUtil.getParentOfType(
                                                    context.getFile().getViewProvider().findElementAt(originalExpressionStartOffset),
-                                                   clazz
+                                                   PsiNewExpression.class
                                            );
                                            JavaCodeStyleManager.getInstance(context.getProject()).shortenClassReferences(decoratorExpression);
                                        });

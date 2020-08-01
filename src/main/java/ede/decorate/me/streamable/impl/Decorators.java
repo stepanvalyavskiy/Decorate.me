@@ -43,7 +43,6 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
             return Stream.of(
                     new DecoratorExpression(
                             content.getText(),
-                            content.getClass(),
                             ctor,
                             superType,
                             indexes.get(0)
@@ -54,7 +53,6 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
                           .map(index ->
                                   new DecoratorExpression(
                                           content.getText(),
-                                          content.getClass(),
                                           ctor,
                                           superType,
                                           index,

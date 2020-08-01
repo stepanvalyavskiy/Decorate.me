@@ -11,7 +11,7 @@ import ede.decorate.me.dependencyManagment.InheritorsInstances;
 /**
  * Completion contributor is needed to register completion providers in Intellij IDEA.
  */
-public final class DecoratorConstructorsCompletionContributor extends CompletionContributor {
+public final class DecoratorsCompletionContributor extends CompletionContributor {
 
     /**
      *  The preferred way to implement code completion is to provide constructor in a contributor and register completion providers there:
@@ -30,15 +30,15 @@ public final class DecoratorConstructorsCompletionContributor extends Completion
      *  you shouldn't create yet another CompletionContributor or CompletionProvider.
      *  Just provide correspond implementation of {@link PatternToDecoratablePsiExpression} and it will be automatically registered here.
      *
-     *  {@link DecoratorConstructorsCompletionProvider} is also designed to be able to work after other expressions.
+     *  {@link DecoratorsCompletionProvider} is also designed to be able to work after other expressions.
      */
-    public DecoratorConstructorsCompletionContributor() {
-        Iterable<PatternToDecoratablePsiExpression> expressionsToDecorate = new InheritorsInstances<>(PatternToDecoratablePsiExpression.class);
+    public DecoratorsCompletionContributor() {
+        Iterable<PatternToDecoratablePsiExpression> expressionsToDecorate = new InheritorsInstances<>(PatternToDecoratablePsiExpression.class, "ede.decorate.me");
         expressionsToDecorate.forEach(
                 expressionToDecorate ->
                         extend(CompletionType.SMART,
                                 expressionToDecorate.pattern(),
-                                new DecoratorConstructorsCompletionProvider(expressionToDecorate)
+                                new DecoratorsCompletionProvider(expressionToDecorate)
                         )
         );
     }
