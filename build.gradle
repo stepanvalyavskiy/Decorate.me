@@ -44,6 +44,7 @@ publishPlugin {
 }
 
 patchPluginXml {
+    sinceBuild '193'
     changeNotes """
       v1.2<br>
       completions are also shown after method calls, string literals and class references<br>  
