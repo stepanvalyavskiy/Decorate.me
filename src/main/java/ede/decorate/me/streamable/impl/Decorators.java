@@ -19,9 +19,9 @@ import java.util.stream.Stream;
 
 public final class Decorators implements Streamable<LookupElementBuilder> {
     private final PsiElement content;
-    private final Streamable<ConstructorsWithParameters.ConstructorToSuperType> constructors;
+    private final Streamable<VIsibleConstructorsWithParameters.ConstructorToSuperType> constructors;
 
-    public Decorators(PsiElement content, Streamable<ConstructorsWithParameters.ConstructorToSuperType> constructors) {
+    public Decorators(PsiElement content, Streamable<VIsibleConstructorsWithParameters.ConstructorToSuperType> constructors) {
         this.content = content;
         this.constructors = constructors;
     }

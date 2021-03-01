@@ -6,7 +6,7 @@ import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.util.ProcessingContext;
 import ede.decorate.me.decoratablePsiExpressions.DecoratablePsiExpression;
 import ede.decorate.me.decoratablePsiExpressions.patternToDecoratablePsiExpression.PatternToDecoratablePsiExpression;
-import ede.decorate.me.streamable.impl.ConstructorsWithParameters;
+import ede.decorate.me.streamable.impl.VIsibleConstructorsWithParameters;
 import ede.decorate.me.streamable.impl.Decorators;
 import ede.decorate.me.streamable.impl.SuperTypesOf;
 import org.jetbrains.annotations.NotNull;
@@ -31,12 +31,13 @@ public final class DecoratorsCompletionProvider extends CompletionProvider<Compl
         DecoratablePsiExpression psiExpressionToDecorate = expressionToDecorate.psiDecoratableExpression(completionParameters.getPosition());
         new Decorators(
                 psiExpressionToDecorate.content(),
-                new ConstructorsWithParameters(
+                new VIsibleConstructorsWithParameters(
                         new SuperTypesOf(
                                 psiExpressionToDecorate.myClass(),
                                 psiExpressionToDecorate.myTypes()
                         ),
-                        completionParameters.getEditor().getProject()
+                        completionParameters.getEditor().getProject(),
+                        completionParameters.getPosition()
                 )
         ).flush(completionResultSet);
     }
