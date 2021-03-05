@@ -55,6 +55,7 @@ public final class DecoratorExpression implements LookupDecorator {
                                    .withLookupString("wrap " + name())
                                    .withIcon(ElegantObjects.CACTOOS)
                                    .withInsertHandler((context, item) -> {
+                                       //TODO{PRIO-1} BUG: if position goes after enter -> crashes
                                        WriteCommandAction.runWriteCommandAction(context.getProject(), () -> {
                                            int originalExpressionStartOffset = context.getStartOffset() - original.length() - 1;
                                            deleteOriginalExpression(context, originalExpressionStartOffset);

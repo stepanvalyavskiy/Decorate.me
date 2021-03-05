@@ -37,7 +37,8 @@ public final class DecoratorsCompletionProvider extends CompletionProvider<Compl
                                 psiExpressionToDecorate.myTypes()
                         ),
                         completionParameters.getEditor().getProject(),
-                        completionParameters.getPosition()
+                        completionParameters.getPosition(),
+                        psiExpressionToDecorate
                 )
         ).flush(completionResultSet);
     }

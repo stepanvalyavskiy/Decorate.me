@@ -3,15 +3,18 @@ package ede.decorate.me.streamable.impl;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.lang.jvm.JvmParameter;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiType;
+import com.intellij.lang.jvm.types.JvmReferenceType;
+import com.intellij.lang.jvm.types.JvmType;
+import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiClassReferenceType;
+import com.intellij.psi.impl.source.tree.java.PsiNewExpressionImpl;
 import com.intellij.psi.util.PsiUtil;
+import com.intellij.psi.util.TypeConversionUtil;
 import ede.decorate.me.lookupDecorator.impl.DecoratorExpression;
 import ede.decorate.me.streamable.Streamable;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,14 +33,17 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
     public Stream<LookupElementBuilder> stream() {
         return constructors
                 .stream()
-                .flatMap(ctorToSuperType -> decoratorsOf(ctorToSuperType.ctor, ctorToSuperType.superType));
+                .flatMap(this::decoratorsOf);
     }
 
     public void flush(CompletionResultSet completionResultSet) {
         stream().forEach(completionResultSet::addElement);
     }
 
-    private Stream<LookupElementBuilder> decoratorsOf(PsiMethod ctor, PsiClass superType) {
+    private Stream<LookupElementBuilder> decoratorsOf(VIsibleConstructorsWithParameters.ConstructorToSuperType ctorToSuperType) {//ConstructorToSuperType
+        final PsiMethod ctor = ctorToSuperType.ctor;
+        final PsiClass superType = ctorToSuperType.superType;
+        final PsiClass myType = ctorToSuperType.myType;
         List<Integer> indexes = indexesOfSuperTypeInCtrParametersList(superType, ctor.getParameters());
         if (indexes.size() == 1) {
             return Stream.of(
@@ -50,15 +56,15 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
             );
         } else {
             return indexes.stream()
-                          .map(index ->
-                                  new DecoratorExpression(
-                                          content.getText(),
-                                          ctor,
-                                          superType,
-                                          index,
-                                          name -> String.format("[%s]", name)
-                                  ).lookupElement()
-                          );
+                    .map(index ->
+                            new DecoratorExpression(
+                                    content.getText(),
+                                    ctor,
+                                    superType,
+                                    index,
+                                    name -> String.format("[%s]", name)
+                            ).lookupElement()
+                    );
         }
     }
 
@@ -71,9 +77,41 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
                                                 (PsiType) parameters[i].getType()
                                         )
                                 )
-                        )
-                        .boxed()
-                        .collect(Collectors.toList());
+                        ).filter(i -> {
+                    JvmType type = parameters[i].getType();
+                    if (type instanceof PsiEllipsisType) {
+                        type = ((PsiEllipsisType) type).getDeepComponentType();
+                    }
+                    Iterator<JvmType> iterator = ((JvmReferenceType) type).typeArguments().iterator();
+                    if (!iterator.hasNext()) {
+                        return true;
+                    }
+                    JvmType next = iterator.next();
+                    PsiClass resolve;
+                    if (next instanceof PsiWildcardType) {
+                        resolve = ((PsiClassReferenceType) ((PsiWildcardType) next).getBound()).resolve();
+                    } else {
+                        //TODO idk what types are present -> want to have ClassCastException here.
+                        try {
+                            resolve = ((PsiClassReferenceType) next).resolve();
+                        } catch (ClassCastException e) {
+                            System.out.println("CLASS CAST" + e);
+                            return false;
+                        }
+                    }
+                    if (resolve instanceof PsiTypeParameter) {
+                        return true;
+                    }
+                    return !GenericsUtil
+                            .checkNotInBounds(
+                                    //TODO{PRIO-1} works only for constructors!
+                                    //TODO if has smth from the left of = (or fun return) -> see generic there instead of content.(> java 5)
+                                    ((PsiNewExpressionImpl) content).getType(),
+                                    (PsiType) type,
+                                    false
+                            );
+                })
+                .boxed()
+                .collect(Collectors.toList());
     }
-
 }
