@@ -7,9 +7,8 @@ import com.intellij.lang.jvm.types.JvmReferenceType;
 import com.intellij.lang.jvm.types.JvmType;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
-import com.intellij.psi.impl.source.tree.java.PsiNewExpressionImpl;
+import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.psi.util.PsiUtil;
-import com.intellij.psi.util.TypeConversionUtil;
 import ede.decorate.me.lookupDecorator.impl.DecoratorExpression;
 import ede.decorate.me.streamable.Streamable;
 import org.jetbrains.annotations.NotNull;
@@ -21,10 +20,12 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public final class Decorators implements Streamable<LookupElementBuilder> {
+    private TreeElement replaceableRefExp;
     private final PsiElement content;
     private final Streamable<VIsibleConstructorsWithParameters.ConstructorToSuperType> constructors;
 
-    public Decorators(PsiElement content, Streamable<VIsibleConstructorsWithParameters.ConstructorToSuperType> constructors) {
+    public Decorators(TreeElement replaceableRefExp, PsiElement content, Streamable<VIsibleConstructorsWithParameters.ConstructorToSuperType> constructors) {
+        this.replaceableRefExp = replaceableRefExp;
         this.content = content;
         this.constructors = constructors;
     }
@@ -48,6 +49,7 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
         if (indexes.size() == 1) {
             return Stream.of(
                     new DecoratorExpression(
+                            replaceableRefExp,
                             content.getText(),
                             ctor,
                             superType,
@@ -58,6 +60,7 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
             return indexes.stream()
                     .map(index ->
                             new DecoratorExpression(
+                                    replaceableRefExp,
                                     content.getText(),
                                     ctor,
                                     superType,
@@ -86,16 +89,17 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
                     if (!iterator.hasNext()) {
                         return true;
                     }
+                    //TODO{PRIO-2} iterate and replace all PsiTypeParameter & PsiWildcard with java.lang.Object
                     JvmType next = iterator.next();
                     PsiClass resolve;
                     if (next instanceof PsiWildcardType) {
                         resolve = ((PsiClassReferenceType) ((PsiWildcardType) next).getBound()).resolve();
                     } else {
-                        //TODO idk what types are present -> want to have ClassCastException here.
+                        //TODO{PRIO-1} idk what types are present -> want to have ClassCastException here.
                         try {
                             resolve = ((PsiClassReferenceType) next).resolve();
                         } catch (ClassCastException e) {
-                            System.out.println("CLASS CAST" + e);
+                            System.out.println("CLASS CAST:" + e);
                             return false;
                         }
                     }
@@ -104,9 +108,8 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
                     }
                     return !GenericsUtil
                             .checkNotInBounds(
-                                    //TODO{PRIO-1} works only for constructors!
-                                    //TODO if has smth from the left of = (or fun return) -> see generic there instead of content.(> java 5)
-                                    ((PsiNewExpressionImpl) content).getType(),
+                                    //TODO if has smth from the left of = (or fun return) -> see generic there instead of content.(> java 5). Common case when it has <>
+                                    ((PsiExpression) content).getType(),
                                     (PsiType) type,
                                     false
                             );

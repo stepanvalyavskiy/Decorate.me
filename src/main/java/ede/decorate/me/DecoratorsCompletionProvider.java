@@ -30,6 +30,7 @@ public final class DecoratorsCompletionProvider extends CompletionProvider<Compl
     protected void addCompletions(@NotNull CompletionParameters completionParameters, @NotNull ProcessingContext processingContext, @NotNull CompletionResultSet completionResultSet) {
         DecoratablePsiExpression psiExpressionToDecorate = expressionToDecorate.psiDecoratableExpression(completionParameters.getPosition());
         new Decorators(
+                psiExpressionToDecorate.replaceableRefExp(),
                 psiExpressionToDecorate.content(),
                 new VIsibleConstructorsWithParameters(
                         new SuperTypesOf(

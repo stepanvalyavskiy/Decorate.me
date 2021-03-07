@@ -11,6 +11,7 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiNewExpression;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
+import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import ede.decorate.me.icons.ElegantObjects;
 import ede.decorate.me.lookupDecorator.LookupDecorator;
@@ -22,21 +23,19 @@ import java.util.stream.IntStream;
 
 public final class DecoratorExpression implements LookupDecorator {
 
+    private final TreeElement replaceableRefExp;
     private final String original;
     private final PsiMethod decorator;
     private final PsiClass parentInterface;
     private final Integer index;
     private final UnaryOperator<String> marker;
 
-    public DecoratorExpression(String original, PsiMethod decorator, PsiClass parentInterface, Integer index) {
-        this.original = original;
-        this.decorator = decorator;
-        this.parentInterface = parentInterface;
-        this.index = index;
-        this.marker = noMarkedString -> noMarkedString;
+    public DecoratorExpression(TreeElement replaceableRefExp, String original, PsiMethod decorator, PsiClass parentInterface, Integer index) {
+        this(replaceableRefExp, original, decorator, parentInterface, index, noMarkedString -> noMarkedString);
     }
 
-    public DecoratorExpression(String original, PsiMethod decorator, PsiClass parentInterface, Integer index, UnaryOperator<String> marker) {
+    public DecoratorExpression(TreeElement replaceableRefExp, String original, PsiMethod decorator, PsiClass parentInterface, Integer index, UnaryOperator<String> marker) {
+        this.replaceableRefExp = replaceableRefExp;
         this.original = original;
         this.decorator = decorator;
         this.parentInterface = parentInterface;
@@ -55,12 +54,12 @@ public final class DecoratorExpression implements LookupDecorator {
                                    .withLookupString("wrap " + name())
                                    .withIcon(ElegantObjects.CACTOOS)
                                    .withInsertHandler((context, item) -> {
-                                       //TODO{PRIO-1} BUG: if position goes after enter -> crashes
+                                       //TODO{PRIO-0} cursor position & selected all empty elements
+                                       //TODO{PRIO-1} generic type in DecoratorExpression
                                        WriteCommandAction.runWriteCommandAction(context.getProject(), () -> {
-                                           int originalExpressionStartOffset = context.getStartOffset() - original.length() - 1;
-                                           deleteOriginalExpression(context, originalExpressionStartOffset);
+                                           deleteOriginalExpression(context, replaceableRefExp.getStartOffset());
                                            PsiElement decoratorExpression = PsiTreeUtil.getParentOfType(
-                                                   context.getFile().getViewProvider().findElementAt(originalExpressionStartOffset),
+                                                   context.getFile().getViewProvider().findElementAt(replaceableRefExp.getStartOffset()),
                                                    PsiNewExpression.class
                                            );
                                            JavaCodeStyleManager.getInstance(context.getProject()).shortenClassReferences(decoratorExpression);
