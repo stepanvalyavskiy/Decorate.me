@@ -5,3 +5,6 @@
 # User-specific stuff
 /.idea/
 /out/
+/gradlew.bat
+/gradlew
+/gradle/
