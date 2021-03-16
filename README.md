@@ -22,7 +22,7 @@ Features:
 
 Here is how it works:
 
-<img height="300px" src="src/main/resources/readme/preview.gif" alt="demo"/>
+<img height="408" src="src/main/resources/readme/preview.gif" alt="demo"/>
 
 ## How to Use
 
@@ -154,18 +154,22 @@ See [JB docs](https://jetbrains.org/intellij/sdk/docs/tutorials/writing_tests_fo
 
 Then we will review your changes and apply them to the master branch.
 
-*check out the plugin*
+### Tips
  
-*build the plugin*
-`gradle build build`
- 
- *run embedded community edition idea with the plugin on board.*
-`gradle intellij runIde`
+- build the plugin
 
-*build and install the plugin to your own idea*
-`gradle intellij buildPlugin`
+    `gradle build build`
+ 
+- run embedded community edition idea with the plugin on board.
+ 
+    `gradle intellij runIde`
+
+- build and install the plugin to your own idea
+
+    `gradle intellij buildPlugin`
   
-it generates a zip in `./build/distributions/`
-After that you have to install it manually in your IDE.
-  - <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd> > <kbd>Upload that zip</kbd>
+    It generates a zip in `./build/distributions/`
+    After that you have to install it manually in your IDE.
+
+    <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd> > <kbd>Upload that zip</kbd>
   
