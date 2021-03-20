@@ -20,11 +20,13 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public final class Decorators implements Streamable<LookupElementBuilder> {
+    private PsiType psiType;
     private TreeElement replaceableRefExp;
     private final PsiElement content;
     private final Streamable<VIsibleConstructorsWithParameters.ConstructorToSuperType> constructors;
 
-    public Decorators(TreeElement replaceableRefExp, PsiElement content, Streamable<VIsibleConstructorsWithParameters.ConstructorToSuperType> constructors) {
+    public Decorators(PsiType psiType, TreeElement replaceableRefExp, PsiElement content, Streamable<VIsibleConstructorsWithParameters.ConstructorToSuperType> constructors) {
+        this.psiType = psiType;
         this.replaceableRefExp = replaceableRefExp;
         this.content = content;
         this.constructors = constructors;
@@ -109,7 +111,7 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
                     return !GenericsUtil
                             .checkNotInBounds(
                                     //TODO if has smth from the left of = (or fun return) -> see generic there instead of content.(> java 5). Common case when it has <>
-                                    ((PsiExpression) content).getType(),
+                                    psiType,
                                     (PsiType) type,
                                     false
                             );

@@ -1,19 +1,15 @@
 package ede.decorate.me.streamable.impl;
 
-import com.intellij.openapi.module.impl.scopes.JdkScope;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.SearchScope;
 import com.intellij.psi.search.searches.ClassInheritorsSearch;
 import com.intellij.psi.util.PsiUtil;
-import ede.decorate.me.decoratablePsiExpressions.DecoratablePsiExpression;
 import ede.decorate.me.streamable.Streamable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
@@ -23,13 +19,11 @@ public final class VIsibleConstructorsWithParameters implements Streamable<VIsib
     private final Streamable<PsiClass> superTypes;
     private final Project project;
     private final PsiElement position;
-    private final DecoratablePsiExpression psiExpressionToDecorate;
 
-    public VIsibleConstructorsWithParameters(Streamable<PsiClass> superTypes, Project project, PsiElement position, DecoratablePsiExpression psiExpressionToDecorate) {
+    public VIsibleConstructorsWithParameters(Streamable<PsiClass> superTypes, Project project, PsiElement position) {
         this.superTypes = superTypes;
         this.project = project;
         this.position = position;
-        this.psiExpressionToDecorate = psiExpressionToDecorate;
     }
 
     /**

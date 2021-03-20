@@ -19,12 +19,12 @@ import java.util.stream.Stream;
 public final class SuperTypesOf implements Streamable<PsiClass> {
 
     private final PsiClass sourcePsiClass;
-    private final PsiType[] sourcePsiTypes;
+//    private final PsiType[] sourcePsiTypes;
     private final Set<PsiClass> superTypes;
 
     public SuperTypesOf(PsiClass sourcePsiClass, PsiType[] sourcePsiTypes) {
         this.sourcePsiClass = sourcePsiClass;
-        this.sourcePsiTypes = sourcePsiTypes;
+//        this.sourcePsiTypes = sourcePsiTypes;
         this.superTypes = superTypes();
     }
 

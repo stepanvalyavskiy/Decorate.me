@@ -5,7 +5,9 @@ import com.intellij.codeInsight.completion.CompletionProvider;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.util.ProcessingContext;
 import ede.decorate.me.decoratablePsiExpressions.DecoratablePsiExpression;
+import ede.decorate.me.decoratablePsiExpressions.impl.LeftBorderdExpression;
 import ede.decorate.me.decoratablePsiExpressions.patternToDecoratablePsiExpression.PatternToDecoratablePsiExpression;
+import ede.decorate.me.streamable.impl.LeftBorderedSuperTypes;
 import ede.decorate.me.streamable.impl.VIsibleConstructorsWithParameters;
 import ede.decorate.me.streamable.impl.Decorators;
 import ede.decorate.me.streamable.impl.SuperTypesOf;
@@ -28,18 +30,24 @@ public final class DecoratorsCompletionProvider extends CompletionProvider<Compl
      */
     @Override
     protected void addCompletions(@NotNull CompletionParameters completionParameters, @NotNull ProcessingContext processingContext, @NotNull CompletionResultSet completionResultSet) {
-        DecoratablePsiExpression psiExpressionToDecorate = expressionToDecorate.psiDecoratableExpression(completionParameters.getPosition());
+        DecoratablePsiExpression psiExpressionToDecorate =
+                new LeftBorderdExpression(
+                        expressionToDecorate.psiDecoratableExpression(completionParameters.getPosition())
+                );
         new Decorators(
+                psiExpressionToDecorate.myType(),
                 psiExpressionToDecorate.replaceableRefExp(),
                 psiExpressionToDecorate.content(),
                 new VIsibleConstructorsWithParameters(
-                        new SuperTypesOf(
-                                psiExpressionToDecorate.myClass(),
-                                psiExpressionToDecorate.myTypes()
+                        new LeftBorderedSuperTypes(
+                                new SuperTypesOf(
+                                        psiExpressionToDecorate.myClass(),
+                                        psiExpressionToDecorate.myTypes()
+                                ),
+                                psiExpressionToDecorate.leftType()
                         ),
                         completionParameters.getEditor().getProject(),
-                        completionParameters.getPosition(),
-                        psiExpressionToDecorate
+                        completionParameters.getPosition()
                 )
         ).flush(completionResultSet);
     }

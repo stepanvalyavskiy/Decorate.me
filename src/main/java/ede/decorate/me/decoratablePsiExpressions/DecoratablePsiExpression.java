@@ -1,9 +1,6 @@
 package ede.decorate.me.decoratablePsiExpressions;
 
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReferenceExpression;
-import com.intellij.psi.PsiType;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.psi.util.PsiTreeUtil;
 
@@ -18,5 +15,13 @@ public interface DecoratablePsiExpression {
                         content(),
                         PsiReferenceExpression.class
                 );
+    }
+
+    default PsiType myType() {
+        return ((PsiExpression) content()).getType();
+    }
+
+    default PsiClass leftType() {
+        return null;
     }
 }
