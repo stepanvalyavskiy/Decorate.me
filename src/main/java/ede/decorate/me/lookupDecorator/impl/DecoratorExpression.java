@@ -3,12 +3,7 @@ package ede.decorate.me.lookupDecorator.impl;
 import com.intellij.codeInsight.completion.InsertionContext;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiNewExpression;
-import com.intellij.psi.PsiParameter;
+import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -55,7 +50,6 @@ public final class DecoratorExpression implements LookupDecorator {
                                    .withIcon(ElegantObjects.CACTOOS)
                                    .withInsertHandler((context, item) -> {
                                        //TODO{PRIO-0} cursor position & selected all empty elements
-                                       //TODO{PRIO-1} generic type in DecoratorExpression
                                        WriteCommandAction.runWriteCommandAction(context.getProject(), () -> {
                                            deleteOriginalExpression(context, replaceableRefExp.getStartOffset());
                                            PsiElement decoratorExpression = PsiTreeUtil.getParentOfType(
@@ -82,21 +76,26 @@ public final class DecoratorExpression implements LookupDecorator {
     }
 
     private String expression() {
-        return Optional.of(decorator)
-                .map(PsiMethod::getContainingClass)
+        Optional<PsiClass> psiClass =
+                Optional.of(decorator)
+                        .map(PsiMethod::getContainingClass);
+        boolean hasTypeParameters =
+                psiClass
+                        .map(PsiClass::hasTypeParameters)
+                        .orElse(false);
+        return psiClass
                 .map(PsiClass::getQualifiedName)
                 .map(className ->
                         String.format(
-                                "new %s%s",
+                                "new %s%s%s",
                                 className,
+                                hasTypeParameters ? "<>" : "",
                                 parameters(this::typeAndNameDummy))
                 )
                 .orElse("");
-//        return "new " + decorator.getContainingClass().getQualifiedName() + parameters(this::typeAndNameDummy);
     }
 
     private String parameters(BiFunction<Integer, PsiParameter, String> typeAndName) {
-        //JvmParameter[] parameters = decorator.getParameters();
         PsiParameter[] parameters = decorator.getParameterList().getParameters();
         return String.format("(%s)", IntStream.range(0, parameters.length)
                                               .mapToObj(i -> typeAndName.apply(i, parameters[i]))
@@ -112,10 +111,25 @@ public final class DecoratorExpression implements LookupDecorator {
         return decorator.getName();
     }
 
-    private String typeAndNameDummy(int index, PsiParameter ignored) {
+    private String typeAndNameDummy(int index, PsiParameter parameter) {
         String name = "";
+
         if (this.index == index) {
             name = original;
+        } else {
+            PsiType type = parameter.getType();
+            if (type instanceof PsiPrimitiveType) {
+                if (type.equals(PsiType.SHORT)) name = "(short) 0";
+                if (type.equals(PsiType.CHAR)) name = "(char) 0";
+                if (type.equals(PsiType.BYTE))name = "(byte) 0";
+                if (type.equals(PsiType.INT)) name = "0";
+                if (type.equals(PsiType.LONG)) name = "0L";
+                if (type.equals(PsiType.FLOAT)) name = "0.0f";
+                if (type.equals(PsiType.DOUBLE)) name = "0.0d";
+                if (type.equals(PsiType.BOOLEAN)) name = "false";
+            } else {
+                name = "null";
+            }
         }
         return name;
     }

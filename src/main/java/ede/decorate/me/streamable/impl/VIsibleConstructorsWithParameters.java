@@ -43,6 +43,7 @@ public final class VIsibleConstructorsWithParameters implements Streamable<VIsib
     private Stream<ConstructorToSuperType> constructorsWithParametersToSuperType(PsiClass superType) {
         return subTypesFor(superType)
                 .stream()
+                .filter(this::isNotAbstract)
                 .flatMap(impl ->
                     Arrays.stream(impl.getConstructors())
                             .filter(PsiMethod::hasParameters)
@@ -64,6 +65,10 @@ public final class VIsibleConstructorsWithParameters implements Streamable<VIsib
                 GlobalSearchScope.allScope(project),
                 true
         ).findAll();
+    }
+
+    private boolean isNotAbstract(PsiClass psiClass) {
+        return psiClass.getModifierList() == null || !psiClass.getModifierList().hasModifierProperty(PsiModifier.ABSTRACT);
     }
 
     static public class ConstructorToSuperType {
