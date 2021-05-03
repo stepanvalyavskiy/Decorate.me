@@ -26,11 +26,8 @@ Here is how it works:
 
 ## How to Use
 
-Install using IDE built-in plugin system on Windows:
-  - <kbd>File</kbd> > <kbd>Settings</kbd> > <kbd>Plugins</kbd> > <kbd>Manage Plugin Repositiries...</kbd> > <kbd>Add "https://plugins.jetbrains.com/plugins/alpha/list"</kbd> > <kbd>Ok</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Elegant IDE"</kbd> > <kbd>Install Plugin</kbd>
-
-Install using IDE built-in plugin system on MacOs:
-  - <kbd>Preferences</kbd> > <kbd>Settings</kbd> > <kbd>Plugins</kbd> > <kbd>Manage Plugin Repositiries...</kbd> > <kbd>Add "https://plugins.jetbrains.com/plugins/alpha/list"</kbd> > <kbd>Ok</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Elegant IDE"</kbd> > <kbd>Install Plugin</kbd>
+Install using IDEA built-in plugin system:
+  - <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Decorate.me"</kbd> > <kbd>Install</kbd>
 
 Install manually:
   - Download the [latest release](https://plugins.jetbrains.com/plugin/14706-elegant-ide) and install it manually using <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>

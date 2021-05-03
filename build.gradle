@@ -45,6 +45,7 @@ publishPlugin {
 
 patchPluginXml {
     sinceBuild '193'
+    untilBuild ''
     changeNotes """
       v1.3<br>
       Type checking improved.<br>
