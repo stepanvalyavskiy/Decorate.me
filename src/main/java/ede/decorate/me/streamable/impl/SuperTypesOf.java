@@ -94,13 +94,6 @@ public final class SuperTypesOf implements Streamable<PsiClass> {
 
     @NotNull
     private List<PsiClass> firstLevelInterfacesOf(PsiClass psiClass) {
-//            TODO with types
-//            Arrays.stream(psiClass.getInterfaceTypes())
-//                  .collect(Collectors.toMap(
-//                          JvmReferenceType::resolve,
-//                          JvmReferenceType::typeArguments
-//                          )
-//                  );
         return Arrays.asList(psiClass.getInterfaces());
     }
 }

@@ -9,7 +9,7 @@ import com.intellij.psi.util.TypeConversionUtil;
 import java.util.function.BiPredicate;
 
 
-public class AssignableGenerics implements BiPredicate<PsiType, PsiTypeParameter[]> {
+public final class AssignableGenerics implements BiPredicate<PsiType, PsiTypeParameter[]> {
 
     private final PsiType decoratedType;
     private final PsiResolveHelper resolveHelper;
@@ -22,7 +22,7 @@ public class AssignableGenerics implements BiPredicate<PsiType, PsiTypeParameter
     }
 
     @Override
-    public boolean test(final PsiType candidateType, final PsiTypeParameter[] typeParameters) {
+    public final boolean test(final PsiType candidateType, final PsiTypeParameter[] typeParameters) {
         return TypeConversionUtil.isAssignable(
                 resolveHelper.inferTypeArguments(
                         typeParameters,

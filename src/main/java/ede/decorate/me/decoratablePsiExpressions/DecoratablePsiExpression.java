@@ -8,7 +8,6 @@ public interface DecoratablePsiExpression {
     PsiElement content();
     PsiClass myClass();
     PsiType[] myTypes();
-    //TODO default methods are shit
     default TreeElement replaceableRefExp() {
         return (TreeElement)
                 PsiTreeUtil.getParentOfType(
