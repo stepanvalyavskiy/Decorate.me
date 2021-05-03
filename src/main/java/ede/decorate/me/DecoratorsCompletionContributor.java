@@ -36,7 +36,7 @@ public final class DecoratorsCompletionContributor extends CompletionContributor
         Iterable<PatternToDecoratablePsiExpression> expressionsToDecorate = new InheritorsInstances<>(PatternToDecoratablePsiExpression.class, "ede.decorate.me");
         expressionsToDecorate.forEach(
                 expressionToDecorate ->
-                        extend(CompletionType.BASIC,
+                        extend(CompletionType.SMART,
                                 expressionToDecorate.pattern(),
                                 new DecoratorsCompletionProvider(expressionToDecorate)
                         )
