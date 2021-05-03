@@ -11,6 +11,7 @@ import ede.decorate.me.streamable.impl.LeftBorderedSuperTypes;
 import ede.decorate.me.streamable.impl.VIsibleConstructorsWithParameters;
 import ede.decorate.me.streamable.impl.Decorators;
 import ede.decorate.me.streamable.impl.SuperTypesOf;
+import ede.decorate.me.typechecking.AssignableGenerics;
 import org.jetbrains.annotations.NotNull;
 
 public final class DecoratorsCompletionProvider extends CompletionProvider<CompletionParameters> {
@@ -35,7 +36,10 @@ public final class DecoratorsCompletionProvider extends CompletionProvider<Compl
                         expressionToDecorate.psiDecoratableExpression(completionParameters.getPosition())
                 );
         new Decorators(
-                psiExpressionToDecorate.myType(),
+                new AssignableGenerics(
+                        psiExpressionToDecorate.myType(),
+                        completionParameters.getEditor().getProject()
+                ),
                 psiExpressionToDecorate.replaceableRefExp(),
                 psiExpressionToDecorate.content(),
                 new VIsibleConstructorsWithParameters(
