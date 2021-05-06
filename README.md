@@ -5,10 +5,10 @@
 
 [![Build Status](https://circleci.com/gh/stepanvalyavskiy/Decorate.me.svg?style=svg)](https://circleci.com/gh/stepanvalyavskiy/Decorate.me)
 [![Hits-of-Code](https://hitsofcode.com/github/stepanvalyavskiy/decorate.me)](https://hitsofcode.com/view/github/stepanvalyavskiy/decorate.me)
-[![JetBrains IntelliJ Plugins](https://img.shields.io/badge/jetbrains%20plugins%20repository-v1.1-blue)](https://plugins.jetbrains.com/plugin/14706-elegant-ide)
+[![JetBrains IntelliJ Plugins](https://img.shields.io/badge/jetbrains%20plugins%20repository-v1.3-blue)](https://plugins.jetbrains.com/plugin/14706-decorate-me/versions/stable/118855)
 
 **Decorate.me** is an auto-completion Intellij IDEA 
-[19.3+](https://plugins.jetbrains.com/plugin/14706-elegant-ide/versions) 
+20.1+ 
 [plugin](https://plugins.jetbrains.com/plugin/14706-elegant-ide) 
 suggesting you a list of all available [decorators](https://en.wikipedia.org/wiki/Decorator_pattern) for your Java object.
 You have to watch this [two-minutes video](https://youtu.be/ZPHrfJN6f9Q) first!
