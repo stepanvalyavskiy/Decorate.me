@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>clueqva.Decorate.me</id>
     <name>Decorate.me</name>
-    <vendor email="stepanvalyavskiy@gmail.com" url="https://www.linkedin.com/in/stepan-valiavskii"/>
+    <vendor email="stepanvalyavskiy@gmail.com" url="https://www.linkedin.com/in/stepan-valiavskii">Stepan Valiavskii</vendor>
 
     <description><![CDATA[
     Wraps constructors in decorating constructors using completions.<br/>
