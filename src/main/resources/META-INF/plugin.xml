@@ -15,8 +15,4 @@
         <completion.contributor language="JAVA"
                                 implementationClass="ede.decorate.me.DecoratorsCompletionContributor"/>
     </extensions>
-
-    <actions>
-        <!-- Not Yet -->
-    </actions>
 </idea-plugin>
