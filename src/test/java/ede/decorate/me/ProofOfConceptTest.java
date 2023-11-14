@@ -34,8 +34,8 @@ public class ProofOfConceptTest extends LightJavaCodeInsightFixtureTestCase {
         List<String> collect = Arrays.stream(Objects.requireNonNull(myFixture.getLookupElements()))
                                      .map(LookupElement::getLookupString)
                                      .collect(Collectors.toList());
-        assertTrue(collect.contains("new x.SharedDecorator(new Original(), )"));
-        assertTrue(collect.contains("new x.SharedDecorator(, new Original())"));
+        assertTrue(collect.contains("new x.SharedDecorator(new Original(), null)"));
+        assertTrue(collect.contains("new x.SharedDecorator(null, new Original())"));
         myFixture.type("\t");
         myFixture.checkResultByFile("result/completionShared.java");
     }
