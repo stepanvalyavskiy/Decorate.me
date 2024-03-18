@@ -3,7 +3,7 @@
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org) 
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
-[![Build Status](https://circleci.com/gh/stepanvalyavskiy/Decorate.me.svg?style=svg)](https://circleci.com/gh/stepanvalyavskiy/Decorate.me)
+![Build Status](https://github.com/stepanvalyavskiy/Decorate.me/workflows/CI/badge.svg)
 [![Hits-of-Code](https://hitsofcode.com/github/stepanvalyavskiy/decorate.me)](https://hitsofcode.com/view/github/stepanvalyavskiy/decorate.me)
 [![JetBrains IntelliJ Plugins](https://img.shields.io/badge/jetbrains%20plugins%20repository-v1.3-blue)](https://plugins.jetbrains.com/plugin/14706-decorate-me/versions/stable/118855)
 
