@@ -5,7 +5,7 @@
 
 [![Build Status](https://github.com/stepanvalyavskiy/Decorate.me/actions/workflows/github-actions-CI.yml/badge.svg)](https://github.com/stepanvalyavskiy/Decorate.me/actions/workflows/github-actions-CI.yml)
 [![Hits-of-Code](https://hitsofcode.com/github/stepanvalyavskiy/decorate.me)](https://hitsofcode.com/view/github/stepanvalyavskiy/decorate.me)
-[![JetBrains IntelliJ Plugins](https://img.shields.io/badge/jetbrains%20plugins%20repository-v1.3-blue)](https://plugins.jetbrains.com/plugin/14706-decorate-me/versions/stable/118855)
+[![JetBrains IntelliJ Plugins](https://img.shields.io/badge/jetbrains%20plugins%20repository-v1.3.1-blue)](https://plugins.jetbrains.com/plugin/14706-decorate-me/versions/stable/505905)
 
 **Decorate.me** is an auto-completion Intellij IDEA 
 20.1+ 
@@ -35,8 +35,8 @@ Install manually:
 ## Motivation
 
 I watched [the speech](https://youtu.be/75U9eefFYoU) 
-and was struck by the beauty of an elegant object-
-oriented code in comparison with the procedural one.
+and was struck by the beauty of an elegant object-oriented
+code in comparison with the procedural one.
 One of the main ideas is that classes should not have many methods,
 there should be many classes with a minimal set of methods.
 The proposed approach involves using composed decorators
@@ -92,7 +92,7 @@ Also, you can have a look at its documentation or definition in a same tab.
 Isn't it beautiful?  Sure It is! 
 But what does then our class looks like?
 At least it's just huge, not to mention other issues.
-It seems like a trade off - the uglier the class, the easier it is for us 
+It seems like a trade-off - the uglier the class, the easier it is for us 
 to work with it in the development environment.
 This is no longer the case. 
 Let's have a look at object-oriented Java framework [Cactoos](https://github.com/yegor256/cactoos).
@@ -137,19 +137,12 @@ and call smart completion (Ctrl+Shift+Space)
 You can contribute by forking the repo and sending a pull request. You will need these tools
 to be installed locally:
 
- 1. JDK 11
- 2. Gradle 6.3+
+ 1. JDK 17
+ 2. Gradle 8.2
  3. Lombok plugin
  4. Enabled annotation proccessing
   
 Before sending a pull request, make sure all tests passed, and you covered your changes with new ones.
-Intellij IDEA instance required for plugin tests, so I can't add them to pipeline on circleci. 
-
-Therefore, you need to run them locally.
-For that you need to declare an absolute path to your local IntelliJ IDEA in `build.gradle` and run `gradle test`. 
-See [JB docs](https://jetbrains.org/intellij/sdk/docs/tutorials/writing_tests_for_plugins/tests_prerequisites.html?search=test).
-
-Then we will review your changes and apply them to the master branch.
 
 ### Tips
  
