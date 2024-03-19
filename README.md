@@ -1,5 +1,5 @@
 <img src="src/main/resources/readme/pluginIcon.svg" height="100px"  alt="pluginIcon"/>
-<img src="src/main/resources/readme/Decoratman.svg" height="100px"  alt="Decoratman"/>
+<img style="float: right;" src="src/main/resources/readme/Decoratman.svg" height="100px"  alt="Decoratman"/>
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org) 
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
