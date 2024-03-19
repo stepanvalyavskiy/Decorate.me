@@ -11,7 +11,11 @@
 20.1+ 
 [plugin](https://plugins.jetbrains.com/plugin/14706-elegant-ide) 
 suggesting you a list of all available [decorators](https://en.wikipedia.org/wiki/Decorator_pattern) for your Java object.
-You have to watch this [two-minutes video](https://youtu.be/ZPHrfJN6f9Q) first!
+
+[Short demo](https://youtu.be/ZPHrfJN6f9Q) <br>
+[Second one (Ru)](https://youtu.be/HDH0OlSIoZQ)
+
+
 
 Features:
 
