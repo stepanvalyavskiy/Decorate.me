@@ -12,7 +12,7 @@ jobs:
     name: test
     runs-on: ubuntu-latest
     env:
-      PUBLISH_TOKEN: ${{ secret.PUBLISH }}
+      PUBLISH_TOKEN: ${{ secrets.PUBLISH }}
 
     steps:
       - name: Checkout repository
