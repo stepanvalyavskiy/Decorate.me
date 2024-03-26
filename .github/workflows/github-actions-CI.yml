@@ -3,6 +3,7 @@ on: [push, pull_request]
 
 jobs:
   build:
+    name: test
     runs-on: ubuntu-latest
 
     steps:
