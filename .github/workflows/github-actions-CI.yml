@@ -1,11 +1,6 @@
 name: CI
 on:
   push:
-    branches:
-      - ci-improvements
-  pull_request:
-    branches:
-      - ci-improvements
 
 jobs:
   ci:
