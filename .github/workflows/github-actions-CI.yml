@@ -32,7 +32,7 @@ jobs:
 
       - name: Has to be published?
         id: is_release
-        if: &is_new_release ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
+        if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
         run: |
           version="${{GITHUB_REF#refs/tags/}}"
           version-number="${version:1}"
@@ -40,11 +40,11 @@ jobs:
           echo "New version ${GITHUB_REF#refs/tags/} has to be published"
 
       - name: Assembles a plugin and prepares ZIP archive for deployment
-        if: *is_new_release
+        if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
         run: ./gradle buildPlugin
 
       - name: Check version
-        if: *is_new_release
+        if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
         run: |
           if [ ! -f $ {{steps.is_release.outputs.zip}} ]; then
             echo "Error: Wrong release version! Check if your tag matches with an actual version in build.gradle.kts"
@@ -56,7 +56,7 @@ jobs:
           fi
 
       - name: Publish GitHub Release
-        if: *is_new_release
+        if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ steps.is_release.outputs.zip }}
