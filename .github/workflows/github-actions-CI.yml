@@ -43,7 +43,7 @@ jobs:
       - name: Check version
         if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
         run: |
-          if [ ! -f $ {{steps.is_release.outputs.zip}} ]; then
+          if [ ! -f "${{steps.is_release.outputs.zip}}" ]; then
             echo "Error: Wrong release version! Check if your tag matches with an actual version in build.gradle.kts"
             echo "provided tag's version: ${{ steps.is_release.outputs.version_number }}"
             echo "${{ steps.is_release.outputs.zip }} file expected to be generated"
