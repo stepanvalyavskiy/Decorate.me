@@ -2,6 +2,7 @@
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org) 
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
+[![We recommend Decorate.me](src/main/resources/readme/badge.svg)](https://plugins.jetbrains.com/plugin/14706-decorate-me/)
 
 [![Build Status](https://github.com/stepanvalyavskiy/Decorate.me/actions/workflows/github-actions-CI.yml/badge.svg)](https://github.com/stepanvalyavskiy/Decorate.me/actions/workflows/github-actions-CI.yml)
 [![Hits-of-Code](https://hitsofcode.com/github/stepanvalyavskiy/decorate.me)](https://hitsofcode.com/view/github/stepanvalyavskiy/decorate.me)
