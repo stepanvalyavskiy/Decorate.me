@@ -1,8 +1,8 @@
 <img src="src/main/resources/readme/pluginIcon.svg" height="100px"  alt="pluginIcon"/> <img style="float: right;" src="src/main/resources/readme/Decoratman.svg" height="100px"  alt="Decoratman"/>
 
-[![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org) 
+[![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
-[![We recommend Decorate.me](src/main/resources/readme/badge.svg)](https://plugins.jetbrains.com/plugin/14706-decorate-me/)
+[![We recommend Decorate.me](https://www.elegantobjects.org/decorate-me.svg)](https://plugins.jetbrains.com/plugin/14706-decorate-me/)
 
 [![Build Status](https://github.com/stepanvalyavskiy/Decorate.me/actions/workflows/github-actions-CI.yml/badge.svg)](https://github.com/stepanvalyavskiy/Decorate.me/actions/workflows/github-actions-CI.yml)
 [![Hits-of-Code](https://hitsofcode.com/github/stepanvalyavskiy/decorate.me)](https://hitsofcode.com/view/github/stepanvalyavskiy/decorate.me)
