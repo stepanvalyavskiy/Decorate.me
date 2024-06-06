@@ -19,9 +19,9 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
     private final BiPredicate<PsiType, PsiTypeParameter[]> generic;
     private final TreeElement replaceableRefExp;
     private final PsiElement content;
-    private final Streamable<VIsibleConstructorsWithParameters.ConstructorToSuperType> constructors;
+    private final Streamable<VisibleConstructorsWithParameters.ConstructorToSuperType> constructors;
 
-    public Decorators(BiPredicate<PsiType, PsiTypeParameter[]> generic, TreeElement replaceableRefExp, PsiElement content, Streamable<VIsibleConstructorsWithParameters.ConstructorToSuperType> constructors) {
+    public Decorators(BiPredicate<PsiType, PsiTypeParameter[]> generic, TreeElement replaceableRefExp, PsiElement content, Streamable<VisibleConstructorsWithParameters.ConstructorToSuperType> constructors) {
         this.generic = generic;
         this.replaceableRefExp = replaceableRefExp;
         this.content = content;
@@ -39,7 +39,7 @@ public final class Decorators implements Streamable<LookupElementBuilder> {
         stream().forEach(completionResultSet::addElement);
     }
 
-    private Stream<LookupElementBuilder> decoratorsOf(VIsibleConstructorsWithParameters.ConstructorToSuperType ctorToSuperType) {//ConstructorToSuperType
+    private Stream<LookupElementBuilder> decoratorsOf(VisibleConstructorsWithParameters.ConstructorToSuperType ctorToSuperType) {//ConstructorToSuperType
         final PsiMethod ctor = ctorToSuperType.ctor;
         final PsiClass superType = ctorToSuperType.superType;
         List<Integer> indexes = indexesOfSuperTypeInCtrParametersList(

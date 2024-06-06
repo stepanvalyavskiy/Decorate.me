@@ -23,7 +23,7 @@ public interface PatternToDecoratablePsiExpression {
     /**
      * For each expression we need to resolve its class and expression itself.
      * It differs for every expression type.
-     * This Method provide corresponding implementation that can work with expression that matches to {@link #pattern()}
+     * This Method provides corresponding implementation that can work with expression that matches to {@link #pattern()}
      *
      * @param position - the position where the completion was called.
      * @return expression to the left of current position that matches to {@link #pattern()}.

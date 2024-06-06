@@ -7,13 +7,13 @@ import ede.decorate.me.decoratablePsiExpressions.DecoratablePsiExpression;
 import java.util.Optional;
 
 
-public final class LeftBorderdExpression implements DecoratablePsiExpression {
+public final class LeftBorderedExpression implements DecoratablePsiExpression {
 
     private final DecoratablePsiExpression origin;
     private final PsiType type;
     private final PsiClass clazz;
 
-    public LeftBorderdExpression(DecoratablePsiExpression origin) {
+    public LeftBorderedExpression(DecoratablePsiExpression origin) {
         this.origin = origin;
         final Optional<PsiType> type;
         PsiElement parent = origin.content().getParent().getParent();

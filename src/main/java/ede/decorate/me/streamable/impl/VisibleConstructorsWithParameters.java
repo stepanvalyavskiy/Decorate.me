@@ -15,12 +15,12 @@ import java.util.stream.Stream;
 /**
  * Stream with a map constructor to interface/abstract class.
  */
-public final class VIsibleConstructorsWithParameters implements Streamable<VIsibleConstructorsWithParameters.ConstructorToSuperType> {
+public final class VisibleConstructorsWithParameters implements Streamable<VisibleConstructorsWithParameters.ConstructorToSuperType> {
     private final Streamable<PsiClass> superTypes;
     private final Project project;
     private final PsiElement position;
 
-    public VIsibleConstructorsWithParameters(Streamable<PsiClass> superTypes, Project project, PsiElement position) {
+    public VisibleConstructorsWithParameters(Streamable<PsiClass> superTypes, Project project, PsiElement position) {
         this.superTypes = superTypes;
         this.project = project;
         this.position = position;

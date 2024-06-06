@@ -15,17 +15,18 @@ import java.util.stream.Collectors;
  * Exactly one instance for each implementation.
  * @param <T> - parent Interface
  */
-public final class InheritorsInstances<T> implements Iterable<T> {
-    private final List<T> inheritorsInstances;
+public final class Implementations<T> implements Iterable<T> {
+    private final List<T> implementations;
 
     /**
-     * ctor searches for all classes, that implement ifc and are under ede.decorate.me package,
-     * creates one instance for each inheritor and adds it to {@link #inheritorsInstances}.
+     * searches for all classes, that implement given interface,
+     * creates an instance for each implementation
+     * and stores them in {@link #implementations}.
      *
-     * @param ifc - parent Interface
+     * @param ifc - supertype
      */
-    public InheritorsInstances(Class<T> ifc, String path) {
-           inheritorsInstances = new Reflections(path)
+    public Implementations(Class<T> ifc) {
+           implementations = new Reflections(ifc.getPackageName())
                 .getSubTypesOf(ifc)
                 .stream()
                 .map(this::newInstance)
@@ -35,12 +36,12 @@ public final class InheritorsInstances<T> implements Iterable<T> {
     @NotNull
     @Override
     public Iterator<T> iterator() {
-        return inheritorsInstances.iterator();
+        return implementations.iterator();
     }
 
     @Override
     public Spliterator<T> spliterator() {
-        return inheritorsInstances.spliterator();
+        return implementations.spliterator();
     }
 
     @SneakyThrows

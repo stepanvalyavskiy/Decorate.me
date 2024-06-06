@@ -22,7 +22,7 @@ public final class AssignableGenerics implements BiPredicate<PsiType, PsiTypePar
     }
 
     @Override
-    public final boolean test(final PsiType candidateType, final PsiTypeParameter[] typeParameters) {
+    public boolean test(final PsiType candidateType, final PsiTypeParameter[] typeParameters) {
         return TypeConversionUtil.isAssignable(
                 resolveHelper.inferTypeArguments(
                         typeParameters,
